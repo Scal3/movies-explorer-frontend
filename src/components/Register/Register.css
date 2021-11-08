@@ -1,0 +1,146 @@
+.register {
+    padding-bottom: 30px;
+}
+
+.register__top {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__middle {
+    display: flex;
+    flex-direction: column;
+}
+
+.register__logo {
+    width: 38px;
+    height: 38px;
+    margin: 56px auto 50px auto;
+}
+
+.register__header {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    padding: 0;
+    margin: 0 0 80px 0;
+}
+
+.register__input-name {
+    color: #A0A0A0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    margin: 0 0 5px 0;
+    padding: 0;
+}
+
+.register__input-box {
+    margin-bottom: 24px;
+    margin: 0 auto 24px auto;
+}
+
+.register__input-box:last-child {
+    margin-bottom: 83px;
+}
+
+.register__input {
+    width: 256px;
+    border-bottom: 1px solid #A0A0A0;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+.register__input:hover {
+    border-bottom: 1px solid black;
+}
+
+.register__bottom {
+    padding-top: 130px;
+    display: flex;
+    flex-direction: column;
+}
+
+.register__title-and-btn-container {
+    display: flex;
+    margin: 14px auto 0 auto;
+}
+
+.register__submit {
+    width: 260px;
+    height: 45px;
+    border-radius: 3px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0 auto;
+}
+
+.register__title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #A0A0A0;
+    padding: 0;
+    margin: 0 7px 0 0;
+}
+
+.register__entr-btn {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: black;
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .register {
+        display: flex;
+        padding-top: 80px;
+        padding-bottom: 0;
+    }
+
+    .register__top {
+        padding-bottom: 40px;
+    }
+
+    .register__logo {
+        margin: 0 0 40px 0;
+    }
+
+    .register__container {
+        width: 396px;
+        margin: 0 auto;
+    }
+
+    .register__header {
+        margin: 0 ;
+        text-align: left;
+    }
+
+    .register__input {
+        width: 396px;
+    }
+
+    .register__submit {
+        width: 396px;
+    }
+
+    .register__bottom {
+        padding-top: 50px;
+    }
+  }

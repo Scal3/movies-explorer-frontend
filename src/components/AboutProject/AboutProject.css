@@ -1,0 +1,118 @@
+.about-project {
+    padding-top: 70px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 70px;
+}
+
+.about-project__top {
+    border-bottom: 1px solid black;
+    padding-bottom: 28px;
+}
+
+.about-project__heading {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding: 0;
+}
+
+.about-project__middle {
+    padding-top: 60px;
+}
+
+.about-project__paragraph {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 16px 0 60px 0;
+    padding: 0;
+}
+
+.about-project__bottom {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 35px 35px;
+}
+
+.about-project__grid-case {
+    border: none;
+}
+
+.about-project__grid-case-title {
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+}
+
+.about-project__grid-case_color_black {
+    background-color: black;
+}
+
+.about-project__grid-case_color_gray {
+    background-color: #F2F2F2;
+}
+
+.about-project__grid-case-title_color_white {
+    color: white;
+}
+
+
+@media screen and (min-width: 768px) {
+    .about-project {
+        padding-top: 90px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 90px;
+    }
+
+    .about-project__middle {
+        display: flex;
+        padding-top: 70px;
+        justify-content: space-between;
+    }
+
+    .about-project__description-container {
+        padding-bottom: 20px;
+        width: 320px;
+    }
+
+    .about-project__heading {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .about-project__paragraph {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .about-project__bottom {
+        grid-template-columns: 140px 1fr;
+        grid-template-rows: 35px 35px;
+    }
+
+    .about-project__grid-case-title_type_desctop {
+        color: #A0A0A0;
+    }
+}
+
+
+@media screen and (min-width: 1280px) {
+    .about-project {
+        padding-top: 70px;
+        padding-left: 70px;
+        padding-right: 70px;
+        padding-bottom: 70px;
+    }
+
+    .about-project__bottom {
+        grid-template-columns: 228px 1fr;
+    }
+}
