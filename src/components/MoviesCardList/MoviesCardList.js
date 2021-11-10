@@ -6,6 +6,8 @@ function MoviesCardList() {
       <div className="movies-card-list">
         <div className="movies-card-list__top">
           <MovieCard></MovieCard>
+          <MovieCard></MovieCard>
+          <MovieCard></MovieCard>
         </div>
 
         <div className="movies-card-list__bottom">

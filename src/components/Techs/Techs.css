@@ -2,6 +2,10 @@
     padding-top: 60px;
 }
 
+.techs__ears {
+    background-color: #F5F5F5;
+}
+
 .techs__tech-heading {
     font-style: normal;
     font-weight: normal;
@@ -58,9 +62,9 @@
 
 
 @media screen and (min-width: 768px) {
-    .techs {
+    /* .techs {
         background-color: #F5F5F5;
-    }
+    } */
 
     .techs__bottom {
         padding-top: 80px;

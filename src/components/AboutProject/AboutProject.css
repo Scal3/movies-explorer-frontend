@@ -1,4 +1,4 @@
-.about-project {
+.about-project__ears {
     padding-top: 70px;
     padding-left: 18px;
     padding-right: 18px;
@@ -65,7 +65,7 @@
 
 
 @media screen and (min-width: 768px) {
-    .about-project {
+    .about-project__ears {
         padding-top: 90px;
         padding-left: 50px;
         padding-right: 50px;
@@ -106,10 +106,16 @@
 
 @media screen and (min-width: 1280px) {
     .about-project {
+        display: flex;
+    }
+
+    .about-project__ears {
         padding-top: 70px;
         padding-left: 70px;
         padding-right: 70px;
         padding-bottom: 70px;
+        width: 1140px;
+        margin: 0 auto;
     }
 
     .about-project__bottom {

@@ -1,5 +1,6 @@
 .movie-card {
     margin-bottom: 20px;
+    background-color: #F9F9F9;
 }
 
 .movie-card__image {
@@ -26,13 +27,30 @@
 }
 
 .movie-card__button {
-    background-image: url('../../image/likeBtn.png');
     background-color: inherit;
     background-repeat: no-repeat;
     background-size: contain;
     width: 14px;
     height: 12px;
     border: none;
+}
+
+.movie-card__button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition-duration: 300ms;
+}
+
+.movie-card__button_type_active {
+    background-image: url('../../image/likeBtnActive.svg');
+}
+
+.movie-card__button_type_inactive {
+    background-image: url('../../image/likeBtnInactive.svg');
+}
+
+.movie-card__button_type_saved {
+    background-image: url('../../image/cardCloseBtn.svg');
 }
 
 .movie-card__button_type_desctop {
@@ -56,7 +74,6 @@
         display: flex;
         justify-content: space-between;
         padding: 6px 6px 6px 6px;
-        background-color: #F9F9F9;
         margin-bottom: 40px;
     }
 
@@ -89,5 +106,13 @@
 
     .movie-card__button_type_desctop {
         display: block;
+    }
+}
+
+
+@media screen and (min-width: 1280px) {
+    .movie-card {
+        margin: 0 auto 40px auto;
+        width: 1140px;
     }
 }

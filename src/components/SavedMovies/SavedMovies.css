@@ -13,5 +13,7 @@
 @media screen and (min-width: 1280px) {
     .saved-movies {
         padding: 70px 70px 0 70px;
+        display: flex;
+        flex-direction: column;
     }
 }

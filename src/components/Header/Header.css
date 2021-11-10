@@ -1,4 +1,4 @@
-.header {
+.header__ears {
     padding: 18px 14px 18px 14px;
     display: flex;
     justify-content: space-between;
@@ -92,15 +92,21 @@
 
 
 @media screen and (min-width: 768px) {
-    .header {
+    .header__ears {
         padding: 18px 30px 18px 30px;
     }
 }
 
 
 @media screen and (min-width: 1280px) {
-    .header {
+    .header{
+        display: flex;
+    }
+
+    .header__ears {
         padding: 18px 70px 18px 70px;
+        width: 1140px;
+        margin: 0 auto;
     }
 
     .header__btn {
