@@ -31,7 +31,6 @@ function SavedMovies(props) {
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
   const result = props.checked ? shortMovies : movies
 
-  console.log(props.savedMovieCards.movies)
 
     return (
       <div className="saved-movies">

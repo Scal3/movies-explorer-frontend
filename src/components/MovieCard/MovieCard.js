@@ -22,7 +22,7 @@ function MovieCard(props) {
     }
   }
 
-
+  console.log(props.movie)
   if (props.isSavedMovie) {
     buttonMobile = <button className={'movie-card__button movie-card__button_type_mobile movie-card__button_type_saved'} onClick={handleClickButton}></button>
   } else {
@@ -37,7 +37,9 @@ function MovieCard(props) {
     return (
       <div className="movie-card">
         <div className="movie-card__top">
-        <img className="movie-card__image" alt="movie" src={props.isSavedMovie ? props.movie.image : `https://api.nomoreparties.co${props.movie.image.url}`}></img>
+          <a className="movie-card__link" href={props.isSavedMovie ? props.movie.trailer : props.movie.trailerLink} target="_blank" rel="noreferrer">
+            <img className="movie-card__image" alt="movie" src={props.isSavedMovie ? props.movie.image : `https://api.nomoreparties.co${props.movie.image.url}`}></img>
+          </a>
         </div>
 
         <div className="movie-card__bottom">
