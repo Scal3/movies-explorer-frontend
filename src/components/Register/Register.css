@@ -83,6 +83,18 @@
     margin: 0 auto;
 }
 
+.register__submit:hover {
+    transform: scale(1.1);
+    transition-duration: 300ms;
+    cursor: pointer;
+}
+
+.register__submit_type_inactive {
+    pointer-events: none;
+    cursor: default;
+    background-color: gray;
+}
+
 .register__title {
     font-style: normal;
     font-weight: normal;
@@ -103,6 +115,12 @@
     border: none;
     padding: 0;
     margin: 0;
+}
+
+.register__entr-btn:hover {
+    transform: scale(1.1);
+    transition-duration: 300ms;
+    cursor: pointer;
 }
 
 

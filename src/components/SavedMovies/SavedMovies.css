@@ -2,6 +2,11 @@
     padding: 40px 10px 0 10px;
 }
 
+.saved-movies__message {
+    color: red;
+    text-align: center;
+}
+
 
 @media screen and (min-width: 768px) {
     .saved-movies {

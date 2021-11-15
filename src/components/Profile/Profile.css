@@ -30,6 +30,7 @@
     display: flex;
     justify-content: space-between;
     min-width: 260px;
+    position: relative;
 }
 
 .profile__info-container:last-child {
@@ -41,6 +42,22 @@
     font-weight: normal;
     font-size: 11px;
     line-height: 13px;
+    border: none;
+    text-align: right;
+}
+
+.profile__input-error-top {
+    color: red;
+    position: absolute;
+    top: -20px;
+    right: 0;
+}
+
+.profile__input-error-bottom {
+    color: red;
+    position: absolute;
+    bottom: -20px;
+    right: 0;
 }
 
 .profile__buttons {
@@ -58,6 +75,12 @@
     line-height: 15px;
     margin-bottom: 16px;
     cursor: pointer;
+}
+
+.profile__button_type_inactive {
+    pointer-events: none;
+    cursor: default;
+    color: gray;
 }
 
 .profile__button:hover {

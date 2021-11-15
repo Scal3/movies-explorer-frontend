@@ -1,7 +1,7 @@
 import './NotFound.css';
 
 
-function NotFound() {
+function NotFound(props) {
   return (
     <div className="not-found">
         <div className="not-found__top">
@@ -9,7 +9,7 @@ function NotFound() {
             <p className="not-found__message">Страница не найдена!</p>
         </div>
 
-        <button className="not-found__btn">Назад</button>
+        <button className="not-found__btn" onClick={props.goBack}>Назад</button>
     </div>
   );
 }
