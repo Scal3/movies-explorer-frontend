@@ -5,11 +5,13 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 function SearchForm(props) {
 
   const [keyWordError, setKeyWordError] = useState('') // Стэйт для ошибок ключевого слова
+  const [disableSearchBtn, setDisableSearchBtn] = useState(false)
 
   //  Отменяем отображение фильмов, если нет ключевого слова
   useEffect(() => {
     if(props.keyWord.length < 1) {
       props.setIsSubmit(false)
+      setDisableSearchBtn(false)
     }
   }, [props.keyWord] )
 
@@ -28,6 +30,7 @@ function SearchForm(props) {
       setKeyWordError('')
       props.setIsSubmit(true)
       props.setIsLoad(true)
+      setDisableSearchBtn(true)
     }
   }
 
@@ -39,7 +42,7 @@ function SearchForm(props) {
               <div className="search-form__middle">
               <div className="search-form__input-and-btn">
                 <input className="search-form__input" placeholder="&#128269; Фильм" required value={props.keyWord} onChange={handleInput}></input>
-                <button className="search-form__btn" type="submit">Найти</button>
+                {props.isSavedMovie ? null : <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>}
                 <span className="search-form__line"></span>
               </div>
           

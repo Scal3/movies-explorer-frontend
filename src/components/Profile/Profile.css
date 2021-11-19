@@ -66,6 +66,11 @@
     margin: 0 auto;
 }
 
+.profile__req-success {
+    color: green;
+    margin-bottom: 25px;
+}
+
 .profile__button {
     background-color: inherit;
     border: none;

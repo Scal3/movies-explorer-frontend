@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import './Profile.css';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
@@ -8,10 +8,10 @@ import Preloader from '../Preloader/Preloader'
 
 function Profile(props) {
 
-  const currentUser = React.useContext(CurrentUserContext);  //Контекст с инфой пользователя
+  const currentUser = useContext(CurrentUserContext);  //Контекст с инфой пользователя
 
-  const [email, setEmail] = useState(currentUser.email) // Стэйт для мыла
-  const [name, setName] = useState(currentUser.name)  // Стэйт для имени
+  const [email, setEmail] = useState('') // Стэйт для мыла
+  const [name, setName] = useState('')  // Стэйт для имени
 
   const [emailDirty, setEmailDirty] = useState('') // Стэйт, чтобы понять кликнул ли пользователь на мыло
   const [nameDirty, setNameDirty] = useState('') // Стэйт, чтобы понять кликнул ли пользователь на имя
@@ -21,7 +21,9 @@ function Profile(props) {
 
   const [formValid, setFormValid] = useState(false) // Стэйт для валидации кнопки
 
+  const [success, setSuccess] = useState('')
 
+  
   // Задаём состояние кнопки исходя из наличия ошибок валидации
   useEffect(() => {
     if (emailError || nameError || (name === currentUser.name && email === currentUser.email)) {
@@ -30,6 +32,13 @@ function Profile(props) {
       setFormValid(true)
     }
   }, [emailError, nameError, name, email, currentUser.name, currentUser.email])
+
+
+  //  Устанавливаем значения в инпуты
+  useEffect(() => {
+    setEmail(currentUser.email)
+    setName(currentUser.name)
+  }, [currentUser])
 
 
   // Устанавливаем значение в инпут и валидируем email по regex
@@ -48,9 +57,8 @@ function Profile(props) {
   // Устанавливаем значение в инпут и валидируем имя по regex
   const handleName = e => {
     setName(e.target.value)
-    const re = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
-    if (!re.test(String(e.target.value).toLowerCase())) {
-      setNameError('Некоректное имя')
+    if (e.target.value.length < 2 || e.target.value.length > 15) {
+      setNameError('Имя может быть длинной от 2 до 15 символов')
       if (!e.target.value) { setNameError('Имя не может быть пустым') }
     } else {
       setNameError('')
@@ -77,6 +85,8 @@ function Profile(props) {
     .then((res) => {
       props.setIsLoad(false)
       setFormValid(false)
+      props.setCurrentUser(res.data)
+      setSuccess('Успешно обновлено =)')
     })
     .catch(err => {
       console.log(err)
@@ -111,6 +121,7 @@ function Profile(props) {
           </div>
 
           <div className="profile__buttons">
+            {(success) && <div className="profile__req-success">{success}</div>}
             <button className={(formValid ? "profile__button" : "profile__button profile__button_type_inactive")} type="submit">Редактировать</button>
             <button className="profile__button profile__button_type_exit" onClick={props.signOut}>Выйти из аккаунта</button>
           </div>

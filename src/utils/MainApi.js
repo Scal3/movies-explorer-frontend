@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.hb.movies-explorer.nomoredomains.monster'
-const userToken = localStorage.getItem('token');
 
 //  Регистрация
 export function registration (password, email, name) {
@@ -18,10 +17,10 @@ export function registration (password, email, name) {
       if(res.ok) {
         return res.json()
       } else {
-        return console.log(res.status)
+        console.log(res)
+        return Promise.reject(`${res.status}`)
       }
     })
-    .then(res => res)
     .catch(err => console.log(err))
   }
   
@@ -38,7 +37,14 @@ export function registration (password, email, name) {
         email: email
       })
     })
-    .then(res => res.json())
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .then((res) => {
       const { token } = res
       if (token){
@@ -59,8 +65,14 @@ export function registration (password, email, name) {
         "Authorization" : `Bearer ${token}`
       }
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }
 
@@ -71,11 +83,17 @@ export function registration (password, email, name) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${userToken}`
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }
 
@@ -86,15 +104,21 @@ export function registration (password, email, name) {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${userToken}`
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
       },
       body: JSON.stringify({
         name: name,
         email: email,
       })
     })
-    .then(res => res.json())
-      .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }
 
@@ -105,11 +129,17 @@ export function registration (password, email, name) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization" : `Bearer ${userToken}`
+        "Authorization" : `Bearer ${localStorage.getItem('token')}`
       }
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }
 
@@ -140,7 +170,7 @@ export function registration (password, email, name) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${userToken}`,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
       },
       body: JSON.stringify({
         country: country,
@@ -156,8 +186,14 @@ export function registration (password, email, name) {
         nameEN: nameEN,
       }),
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }
 
@@ -169,10 +205,16 @@ export function registration (password, email, name) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${userToken}`,
+        "Authorization": `Bearer ${localStorage.getItem('token')}`,
       },
     })
-    .then(res => res.json())
-    .then(data => data)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      } else {
+        console.log(res)
+        return Promise.reject(`${res.status}`)
+      }
+    })
     .catch(err => console.log(err))
   }

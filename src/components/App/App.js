@@ -1,4 +1,4 @@
-import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './App.css';
 import Register from '../Register/Register';
@@ -17,45 +17,28 @@ import SearchForm from '../SearchForm/SearchForm';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import * as MainApi from '../../utils/MainApi';
+import { isSavedMovie } from '../../utils/constants'
 
 
 function App() {
   const history = useHistory()
-  const [loggedIn, setLoggedIn] = useState(false) //Стэйт для защиты роутов
-  const [currentUser, setCurrentUser] = useState({})  //Стэйт данных пользователя
-  const [savedMovieCards, setSavedMovieCards] = useState([]); //Стэйт массива для сохранённых фильмов
+  const location = useLocation()
+  const [loggedIn, setLoggedIn] = useState(false) // Стэйт для защиты роутов
+  const [currentUser, setCurrentUser] = useState({})  // Стэйт данных пользователя
+  const [savedMovieCards, setSavedMovieCards] = useState([]); // Стэйт массива для сохранённых фильмов
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
   const [isSubmit, setIsSubmit] = useState(false) // Стэйт отображения результата поиска
   const [checked, setChecked] = useState(false) // Стэйт для чекбокса "короткометражки"
   const [isLoad, setIsLoad] = useState(false) //Стэйт для прелоадера
 
-  //Получаем данные пользователя и список карточек
-  useEffect(() => {
-    tokenCheck()
-  }, [] )
-
-  // Если с токеном всё ок, грузим данные пользователя
-  useEffect(() => {
-    if(loggedIn) {
-      Promise.all([MainApi.getUserInfo(), MainApi.getSavedMovies()])
-      .then(([userData, savedMoviesData]) => {
-        setCurrentUser(userData)
-        setSavedMovieCards(savedMoviesData)
-      })
-      .catch((e) => {
-        console.log(`Ошибка загрузки данных: ${e}`)
-      })
-    }
-  }, [loggedIn] )
-
   //Проверка токена
-  function tokenCheck() {
+  useEffect(() => {
     if (localStorage.getItem('token')){
       const token = localStorage.getItem('token')
       MainApi.getContent(token)
       .then(res => {
         setLoggedIn(true)
-        history.push('/movies')
+        history.push(location)
       })
       .catch(err => {
         if(!token) {
@@ -64,7 +47,23 @@ function App() {
         console.log(err)
       })
     }
-  }
+  }, [history] )
+
+
+  // Если с токеном всё ок, грузим данные пользователя
+  useEffect(() => {
+    if(loggedIn) {
+      Promise.all([MainApi.getUserInfo(), MainApi.getSavedMovies()])
+      .then(([userData, savedMoviesData]) => {
+        setCurrentUser(userData)
+        setSavedMovieCards(savedMoviesData.movies)
+      })
+      .catch((e) => {
+        console.log(`Ошибка загрузки данных: ${e}`)
+      })
+    }
+  }, [loggedIn] )
+
 
   //Переход основной сайт
   function goMain(){
@@ -81,15 +80,11 @@ function App() {
     history.push('/signup')
   }
 
-  //Переход на страницу назад
-  function goBack(){
-    history.goBack()
-  }
-
   //Выход из системы
   function signOut(){
     localStorage.removeItem('token');
-    history.push('/signin');
+    history.push('/');
+    setLoggedIn(false)
   }
 
   // Сохраняем фильм 
@@ -110,16 +105,18 @@ function App() {
         }
       )
       .then((res) => {
-        setSavedMovieCards([res, ...savedMovieCards.movies])
+        setSavedMovieCards([res.movie, ...savedMovieCards])
       })
+      .catch((err) => console.log(err))
   }
-
+  
   // Удаляем фильм
   const handleDeleteMovie = (id) => {
     MainApi.deleteMovie(id)
       .then((res) => {
-        setSavedMovieCards(savedMovieCards.movies.filter((item) => item._id !== id));
+        setSavedMovieCards(savedMovieCards.filter((item) => item._id !== id));
       })
+      .catch((err) => console.log(err))
   }
 
 
@@ -132,7 +129,8 @@ function App() {
         <Route path="/signup">
           <Register
             switchToLogin={switchToLogin}
-            goMain={goMain}>
+            goMain={goMain}
+            setLoggedIn={setLoggedIn}>
           </Register>
         </Route>
 
@@ -140,7 +138,8 @@ function App() {
         <Route path="/signin">
           <Login 
             switchToRegistration={switchToRegistration} 
-            goMain={goMain}>
+            goMain={goMain}
+            setLoggedIn={setLoggedIn}>
            </Login>
         </Route>
 
@@ -160,7 +159,7 @@ function App() {
 
         {/* Страница с фильмами */}
         <Route path="/movies">
-          {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/signin" />}
+          {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           <Main 
             keyWord={keyWord} 
             isSubmit={isSubmit} 
@@ -178,13 +177,16 @@ function App() {
 
         {/* Страница с сохранёнными фильмами */}
         <Route path="/saved-movies">
-          {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/signin" />}
+          {loggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
           <Header></Header>
           <SearchForm
             keyWord={keyWord}
             setKeyWord={setKeyWord}
             setIsSubmit={setIsSubmit}
-            setChecked={setChecked}>
+            setChecked={setChecked}
+            setIsLoad={setIsLoad}
+            checked={checked}
+            isSavedMovie={isSavedMovie}>
           </SearchForm>
           <SavedMovies
             savedMovieCards={savedMovieCards}
@@ -192,19 +194,20 @@ function App() {
             isSubmit={isSubmit} 
             checked={checked}
             handleSaveMovie={handleSaveMovie}
-            handleDeleteMovie={handleDeleteMovie}>
+            handleDeleteMovie={handleDeleteMovie}
+            isSavedMovie={isSavedMovie}>
           </SavedMovies>
           <Footer></Footer>
         </Route>
 
         {/* Профиль */}
         <Route path="/profile">
-          {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/signin" />}
-          <Profile signOut={signOut} isLoad={isLoad} setIsLoad={setIsLoad}></Profile>
+          {loggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
+          <Profile signOut={signOut} isLoad={isLoad} setIsLoad={setIsLoad} setCurrentUser={setCurrentUser}></Profile>
         </Route>
 
         {/* Ошибка 404 */}
-        <Route path="*" goBack={goBack}>
+        <Route path="*">
           <NotFound></NotFound>
         </Route>
 
@@ -215,3 +218,4 @@ function App() {
 }
 
 export default App;
+

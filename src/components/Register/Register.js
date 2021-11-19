@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import logo from '../../image/registerLogo.svg'
 import './Register.css';
 import * as MainApi from '../../utils/MainApi';
+import { Link } from 'react-router-dom'
 
 function Register(props) {
 
@@ -17,6 +18,8 @@ function Register(props) {
   const [nameError, setNameError] = useState('Имя не может быть пустым') // Стэйт для ошибок имени
   const [passError, setPassError] = useState('Пароль не может быть пустым') // Стэйт для ошибок пароля
 
+  const [accError, setAccError] = useState('')
+
   const [formValid, setFormValid] = useState(false) // Стэйт для валидации кнопки
 
   // Задаём состояние кнопки исходя из наличия ошибок валидации
@@ -31,9 +34,8 @@ function Register(props) {
   // Устанавливаем значение в инпут и валидируем имя по regex
   const handleName = e => {
     setName(e.target.value)
-    const re = /^(([A-Za-z]+[\-\']?)*([A-Za-z]+)?\s)+([A-Za-z]+[\-\']?)*([A-Za-z]+)?$/
-    if (!re.test(String(e.target.value).toLowerCase())) {
-      setNameError('Некоректное имя')
+    if (e.target.value.length < 2 || e.target.value.length > 15) {
+      setNameError('Имя может быть длинной от 2 до 15 символов')
       if (!e.target.value) { setNameError('Имя не может быть пустым') }
     } else {
       setNameError('')
@@ -79,20 +81,33 @@ function Register(props) {
   const handleSubmit = e => {
     e.preventDefault()
     MainApi.registration(pass, email, name)
-    .then(() => {
-      MainApi.authorization(pass, email)
-      setEmail('')
-      setPass('')
-      setName('')
-      props.goMain()
+    .then((res) => {
+      if(!res) {
+        setAccError('Пользователь с таким email уже зарегистрирован')
+        setEmail('')
+        setPass('')
+        setName('')
+        setFormValid(false)
+      } else {
+        MainApi.authorization(pass, email)
+          .then(() => {
+            setEmail('')
+            setPass('')
+            setName('')
+            props.setLoggedIn(true)
+            props.goMain()
+          })
+          .catch((err) => console.log(err))
+      }
     })
+    .catch((err) => console.log(err))
   }
 
   return (
     <div className="register">
       <div className="register__container">
       <div className="register__top">
-        <img className="register__logo" alt="logo" src={logo}></img>
+        <Link className="register__logo-link" to="/"><img className="register__logo" alt="logo" src={logo}></img></Link>
         <h1 className="register__header">Добро Пожаловать!</h1>
       </div>
 
@@ -101,23 +116,24 @@ function Register(props) {
           <div className="register__input-box">
             <p className="register__input-name">Имя</p>
             <input name="name" className="register__input" type="text" onChange={e => handleName(e)} value={name} onBlur={e => blurHandler(e)} required></input>
-            {(nameDirty && nameError) && <div style={{color: 'red'}}>{nameError}</div>}
+            {(nameDirty && nameError) && <div className="register__input-err">{nameError}</div>}
           </div>
 
           <div className="register__input-box">
             <p className="register__input-name">E-mail</p>
             <input name="email" className="register__input" type="email" onChange={e => handleEmail(e)} value={email} onBlur={e => blurHandler(e)} required></input>
-            {(emailDirty && emailError) && <div style={{color: 'red'}}>{emailError}</div>}
+            {(emailDirty && emailError) && <div className="register__input-err">{emailError}</div>}
           </div>
 
           <div className="register__input-box">
             <p className="register__input-name">Пароль</p>
             <input name="password" className="register__input" type="password" onChange={e => handlePass(e)} value={pass} onBlur={e => blurHandler(e)} required></input>
-            {(passDirty && passError) && <div style={{color: 'red'}}>{passError}</div>}
+            {(passDirty && passError) && <div className="register__input-err">{passError}</div>}
           </div>
         </div>
         
         <div className="register__bottom">
+          {(accError) && <div className="register__input-err">{accError}</div>}
           <button className={(formValid ? "register__submit" : "register__submit register__submit_type_inactive")} type="submit">Зарегистрироваться</button>
 
           <div className="register__title-and-btn-container">

@@ -1,49 +1,53 @@
 import './SavedMovies.css'
 import MovieCard from '../MovieCard/MovieCard';
-import { useEffect, useState } from 'react';
 import * as filteredFunctions from '../../utils/filteredFunctions'
+import { useContext, useEffect, useState } from 'react'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-function SavedMovies(props) {
+function SavedMovies({savedMovieCards, keyWord, checked, isSavedMovie, handleSaveMovie, handleDeleteMovie}) {
 
-  const [noMovies, setNoMovies] = useState('') // Стэйт для сообщения об отсутствии фильмов
-  const array = props.savedMovieCards.movies
+  const currentUser = useContext(CurrentUserContext);  // Контекст с инфой пользователя
+  const [currentMovies, setCurrentMovies] = useState([]); // Стэйт сохранённых фильмов
 
-
-  // Обращаемся к апи за сохранёнными фильмами
+  // При изменении массива сохранённых фильмов переопределяем состояние
   useEffect(() => {
-        if(!props.savedMovieCards.movies) {
-          console.log('Фильмов нет')
-          setNoMovies('Сохранённых фильмов нет')
-        } else {
-          setNoMovies('')
-          }
-  }, [])
+    setCurrentMovies(savedMovieCards)
+  }, [savedMovieCards])
 
-  //  Для кнопки удаления фильма
-  const isSavedMovie = true
+  // Массив фильмов сохранённых текущим пользователем
+  const currentUserMovieArray = currentMovies.filter(movie => {
+    return movie.owner === currentUser.id
+  })
 
   // Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(array, props.keyWord)
+  const movies = filteredFunctions.filteredMovies(currentUserMovieArray, keyWord)
 
   // Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(array, props.keyWord)
+  const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovieArray, keyWord)
 
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = props.checked ? shortMovies : movies
+  const result = checked ? shortMovies : movies
 
 
-    return (
-      <div className="saved-movies">
-        
-        {result.map((movie) => {
+  return (
+    <div className="saved-movies">
+      {currentUserMovieArray.length > 0 ? 
+        (result.length > 0 ? (result.map((movie) => {
           return (
-            <MovieCard isSavedMovie={isSavedMovie} key={movie._id} movie={movie} handleSaveMovie={props.handleSaveMovie} handleDeleteMovie={props.handleDeleteMovie}/>
-            );
-          })}
-          {(noMovies) && <div className="saved-movies__message">{noMovies}</div>}
+            (movie.owner === currentUser.id ? 
+              <MovieCard
+                isSavedMovie={isSavedMovie} 
+                key={movie._id} movie={movie} 
+                handleSaveMovie={handleSaveMovie} 
+                handleDeleteMovie={handleDeleteMovie}
+                savedMovieCards={savedMovieCards}
+              /> : null)
+            )
+          }))
+           : (<p className="movies-card-list__message">Ничего не найдено</p>)
+        ) : <p className="movies-card-list__message">Сохранённых фильмов нет</p>}
       </div>
     );
   }
   
   export default SavedMovies;
-  

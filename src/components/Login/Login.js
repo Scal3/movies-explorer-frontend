@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import logo from '../../image/registerLogo.svg'
 import './Login.css';
 import * as MainApi from '../../utils/MainApi';
+import { Link } from 'react-router-dom'
 
 function Login(props) {
 
@@ -62,12 +63,13 @@ function Login(props) {
   const handleSubmit = e => {
     e.preventDefault()
     MainApi.authorization(pass, email)
-    .then((res) => {
-      props.goMain()
-      console.log(res)
+    .then(() => {
       setEmail('')
       setPass('')
+      props.setLoggedIn(true)
+      props.goMain()
     })
+    .catch((err) => console.log(err))
   }
 
 
@@ -75,7 +77,7 @@ function Login(props) {
       <div className="login register">
         <div className="login__container register__container">
         <div className="login__top register__top">
-          <img className="login__logo register__logo" alt="logo" src={logo}></img>
+          <Link className="login__logo-link register__logo-link" to="/"><img className="login__logo register__logo" alt="logo" src={logo}></img></Link>
           
           <h1 className="login__header register__header">Рады видеть!</h1>
         </div>
@@ -85,13 +87,13 @@ function Login(props) {
             <div className="login__input-box register__input-box">
               <p className="login__input-name register__input-name">E-mail</p>
               <input name="email" className="login__input register__input" type="email" onChange={handleEmail} onBlur={e => blurHandler(e)} value={email} required></input>
-              {(emailDirty && emailError) && <div style={{color: 'red'}}>{emailError}</div>}
+              {(emailDirty && emailError) && <div className="login__input-err register__input-err">{emailError}</div>}
             </div>
 
             <div className="login__input-box register__input-box">
               <p className="login__input-name register__input-name">Пароль</p>
               <input name="password" className="login__input register__input" type="password" onChange={handlePass} onBlur={e => blurHandler(e)} value={pass} required></input>
-              {(passDirty && passError) && <div style={{color: 'red'}}>{passError}</div>}
+              {(passDirty && passError) && <div className="login__input-err register__input-err">{passError}</div>}
             </div>
           </div>
           

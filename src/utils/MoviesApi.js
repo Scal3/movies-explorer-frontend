@@ -11,6 +11,5 @@ export function getMovies() {
           return console.log(res.status)
         }
       })
-      .then(res => res)
       .catch(err => console.log(err))
 }

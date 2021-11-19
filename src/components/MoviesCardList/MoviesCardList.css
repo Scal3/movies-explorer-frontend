@@ -1,10 +1,20 @@
+.movies-card-list {
+    padding-top: 40px;
+    padding-bottom: 130px;
+}
+
+
 .movies-card-list__top {
-    padding: 40px 10px 0px 10px;
+    padding: 0 10px 0px 10px;
 }
 
 .movies-card-list__bottom {
-    padding: 50px 0 80px 0;
     display: flex;
+}
+
+.movies-card-list__message {
+    color: red;
+    text-align: center;
 }
 
 .movies-card-list__more-btn {
@@ -24,6 +34,10 @@
 
 
 @media screen and (min-width: 768px) {
+    .movies-card-list {
+        padding-top: 70px;
+    }
+
     .movies-card-list__top {
         padding: 70px 30px 0px 30px;
     }
