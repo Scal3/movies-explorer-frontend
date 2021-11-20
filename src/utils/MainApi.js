@@ -21,7 +21,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
   
   
@@ -52,7 +51,6 @@ export function registration (password, email, name) {
         return token;
       }
     })
-    .catch(err => console.log(err))
   }; 
   
   
@@ -73,7 +71,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
 
 
@@ -94,7 +91,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
 
 
@@ -119,7 +115,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
 
 
@@ -140,7 +135,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
 
 
@@ -194,7 +188,6 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }
 
 
@@ -216,5 +209,4 @@ export function registration (password, email, name) {
         return Promise.reject(`${res.status}`)
       }
     })
-    .catch(err => console.log(err))
   }

@@ -5,7 +5,10 @@ import { useEffect, useState } from 'react'
 import * as MoviesApi from '../../utils/MoviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
 
-function MoviesCardList(props) {
+function MoviesCardList({
+  keyWord, checked, isSubmit, 
+  setIsLoad, setKeyWord, handleSaveMovie, 
+  handleDeleteMovie, savedMovieCards}) {
 
   const [movieCards, setMovieCards] = useState([]) //Стэйт массива для карточек
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек
@@ -17,28 +20,33 @@ function MoviesCardList(props) {
   };
 
   //  Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(movieCards, props.keyWord)
+  const movies = filteredFunctions.filteredMovies(movieCards, keyWord)
 
   //  Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(movieCards, props.keyWord)
+  const shortMovies = filteredFunctions.filteredShortfilms(movieCards, keyWord)
 
   //  В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = props.checked ? shortMovies : movies
+  const result = checked ? shortMovies : movies
 
   // Обращаемся ко всем фильмам, если нажата кнопка поиска
   useEffect(() => {
-    if(props.isSubmit) {
+    if(isSubmit) {
       MoviesApi.getMovies()
       .then((movies) =>{
         setMovieCards(movies)
-        props.setIsLoad(false)
+        setIsLoad(false)
       })
       .catch((err) => {
         console.log(err)
         setIsSuccess(false)
       })
     }
-  }, [props.isSubmit])
+  }, [isSubmit])
+
+  //  Очищаем инпут формы поиска
+  useEffect(() => {
+    setKeyWord('')
+  }, [])
 
 
 
@@ -46,7 +54,7 @@ function MoviesCardList(props) {
     <div className="movies-card-list">
       {isSuccess ? (
         <>
-          {props.isSubmit ? (
+          {isSubmit ? (
             result.length > 0 ? (
               <>
                 <div className="movies-card-list__top">
@@ -55,9 +63,9 @@ function MoviesCardList(props) {
                       <MovieCard
                         key={movie.id} 
                         movie={movie} 
-                        handleSaveMovie={props.handleSaveMovie} 
-                        handleDeleteMovie={props.handleDeleteMovie}
-                        savedMovieCards={props.savedMovieCards}
+                        handleSaveMovie={handleSaveMovie} 
+                        handleDeleteMovie={handleDeleteMovie}
+                        savedMovieCards={savedMovieCards}
                       />
                     )).slice(0, cardsLimit)}
                 </div>

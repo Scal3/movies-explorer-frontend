@@ -1,13 +1,13 @@
 import './Navigation.css';
 import { NavLink } from 'react-router-dom';
 
-function Navigation(props) {
+function Navigation({isBurgerMenuBtnActive, changeButtonStateFalse}) {
     return (
-      <nav className={(props.isBurgerMenuBtnActive ? 'navigation' : 'navigation_inactive')}>
+      <nav className={(isBurgerMenuBtnActive ? 'navigation' : 'navigation_inactive')}>
         <div className="navigation__blur"/>
 
         <div className="navigation__content">
-          <button className="navigation__close-btn" onClick={props.changeButtonStateFalse}></button>
+          <button className="navigation__close-btn" onClick={changeButtonStateFalse}></button>
 
           <div className="navigation__link-list">
             <NavLink to="/" className="navigation__link">Главная</NavLink>

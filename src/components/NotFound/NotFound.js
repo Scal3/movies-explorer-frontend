@@ -2,7 +2,7 @@ import './NotFound.css';
 import { useHistory} from 'react-router-dom';
 
 
-function NotFound(props) {
+function NotFound() {
   const history = useHistory()
 
   // Переход на страницу назад

@@ -127,6 +127,7 @@ function App() {
 
         {/* Регистрация */}
         <Route path="/signup">
+        {!loggedIn ? <Redirect to="/signup" /> : <Redirect to="/" />}
           <Register
             switchToLogin={switchToLogin}
             goMain={goMain}
@@ -136,6 +137,7 @@ function App() {
 
         {/* Логин */}
         <Route path="/signin">
+        {!loggedIn ? <Redirect to="/signin" /> : <Redirect to="/" />}
           <Login 
             switchToRegistration={switchToRegistration} 
             goMain={goMain}
@@ -185,8 +187,7 @@ function App() {
             setIsSubmit={setIsSubmit}
             setChecked={setChecked}
             setIsLoad={setIsLoad}
-            checked={checked}
-            isSavedMovie={isSavedMovie}>
+            checked={checked}>
           </SearchForm>
           <SavedMovies
             savedMovieCards={savedMovieCards}
@@ -195,7 +196,8 @@ function App() {
             checked={checked}
             handleSaveMovie={handleSaveMovie}
             handleDeleteMovie={handleDeleteMovie}
-            isSavedMovie={isSavedMovie}>
+            isSavedMovie={isSavedMovie}
+            setKeyWord={setKeyWord}>
           </SavedMovies>
           <Footer></Footer>
         </Route>

@@ -4,7 +4,7 @@ import './Register.css';
 import * as MainApi from '../../utils/MainApi';
 import { Link } from 'react-router-dom'
 
-function Register(props) {
+function Register({setLoggedIn, goMain, switchToLogin}) {
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('') // Стэйт для имени
@@ -18,7 +18,7 @@ function Register(props) {
   const [nameError, setNameError] = useState('Имя не может быть пустым') // Стэйт для ошибок имени
   const [passError, setPassError] = useState('Пароль не может быть пустым') // Стэйт для ошибок пароля
 
-  const [accError, setAccError] = useState('')
+  const [isRight, setIsRight] = useState(true)  // Стэйт для ошибки неверных данных
 
   const [formValid, setFormValid] = useState(false) // Стэйт для валидации кнопки
 
@@ -30,6 +30,11 @@ function Register(props) {
       setFormValid(true)
     }
   }, [emailError, nameError, passError])
+
+  // При изменении одного из полей ошибка неверных данных пропадает
+  useEffect(() => {
+    setIsRight(true)
+  }, [email, pass, name])
 
   // Устанавливаем значение в инпут и валидируем имя по regex
   const handleName = e => {
@@ -82,25 +87,25 @@ function Register(props) {
     e.preventDefault()
     MainApi.registration(pass, email, name)
     .then((res) => {
-      if(!res) {
-        setAccError('Пользователь с таким email уже зарегистрирован')
-        setEmail('')
-        setPass('')
-        setName('')
-        setFormValid(false)
-      } else {
-        MainApi.authorization(pass, email)
-          .then(() => {
-            setEmail('')
-            setPass('')
-            setName('')
-            props.setLoggedIn(true)
-            props.goMain()
-          })
-          .catch((err) => console.log(err))
-      }
+      MainApi.authorization(pass, email)
+        .then(() => {
+          setEmail('')
+          setPass('')
+          setName('')
+          setLoggedIn(true)
+          goMain()
+        })
+        .catch((err) => console.log(err))
+
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      setEmail('')
+      setPass('')
+      setName('')
+      setFormValid(false)
+      setIsRight(false)
+    })
   }
 
   return (
@@ -133,12 +138,12 @@ function Register(props) {
         </div>
         
         <div className="register__bottom">
-          {(accError) && <div className="register__input-err">{accError}</div>}
+          {isRight ? null : <p className="register__wrong-data-message">Пользователь с таким email уже зарегистрирован</p>}
           <button className={(formValid ? "register__submit" : "register__submit register__submit_type_inactive")} type="submit">Зарегистрироваться</button>
 
           <div className="register__title-and-btn-container">
             <p className="register__title">Уже зарегистрированы?</p>
-            <button className="register__entr-btn" onClick={props.switchToLogin}>Войти</button>
+            <button className="register__entr-btn" onClick={switchToLogin}>Войти</button>
           </div>
         </div>
 

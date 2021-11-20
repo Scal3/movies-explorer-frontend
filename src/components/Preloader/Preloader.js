@@ -1,12 +1,12 @@
 import React from 'react'
 import './Preloader.css'
 
-const Preloader = (props) => {
+const Preloader = ({isLoad}) => {
 
-    const isLoad = props.isLoad ? 'preloader' : 'preloader_inactive'
+    const isLoading = isLoad ? 'preloader' : 'preloader_inactive'
 
     return (
-        <div className={isLoad}>
+        <div className={isLoading}>
             <div className="preloader__container">
                 <span className="preloader__round"></span>
             </div>

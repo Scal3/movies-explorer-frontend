@@ -69,6 +69,19 @@
 .profile__req-success {
     color: green;
     margin-bottom: 25px;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
+}
+
+.profile__req-fail {
+    color: red;
+    margin-bottom: 25px;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    text-align: center;
 }
 
 .profile__button {
@@ -105,5 +118,15 @@
 @media screen and (min-width: 768px) {
     .profile__info-container {
         min-width: 410px;
+    }
+
+    .profile__req-success {
+        font-size: 15px;
+        line-height: 18px;
+    }
+    
+    .profile__req-fail {
+        font-size: 15px;
+        line-height: 18px;
     }
 }

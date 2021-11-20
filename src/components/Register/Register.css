@@ -64,6 +64,15 @@
     font-weight: normal;
     font-size: 10px;
     line-height: 12px;
+    text-align: center;
+}
+
+.register__wrong-data-message {
+    text-align: center;
+    color: red;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
 }
 
 .register__input:hover {
@@ -167,6 +176,11 @@
     }
 
     .register__input-err {
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+    .register__wrong-data-message {
         font-size: 15px;
         line-height: 18px;
     }

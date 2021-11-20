@@ -1,35 +1,60 @@
 import { useState, useEffect } from 'react'
 import './SearchForm.css'
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { entrBtn } from '../../utils/constants'
 
-function SearchForm(props) {
+function SearchForm({
+  keyWord, setIsSubmit, setKeyWord, 
+  setIsLoad, checked, setChecked}) {
 
   const [keyWordError, setKeyWordError] = useState('') // Стэйт для ошибок ключевого слова
   const [disableSearchBtn, setDisableSearchBtn] = useState(false)
 
   //  Отменяем отображение фильмов, если нет ключевого слова
   useEffect(() => {
-    if(props.keyWord.length < 1) {
-      props.setIsSubmit(false)
+    if(keyWord.length < 1) {
+      setIsSubmit(false)
       setDisableSearchBtn(false)
     }
-  }, [props.keyWord] )
+  }, [keyWord] )
+
+
+  //  Отменяем ввод клавиши entr 
+  useEffect(() => {
+    if (disableSearchBtn) {
+      document.addEventListener('keydown', (event) => {
+        if(event.keyCode === entrBtn) {
+          event.preventDefault();
+          return false;
+        }
+      })
+    }
+
+    return (
+      document.removeEventListener('keydown', (event) => {
+        if(event.keyCode === entrBtn) {
+          event.preventDefault();
+          return false;
+        }
+      })
+    )
+  }, [disableSearchBtn] )
 
 
   //  Обрабатываем инпут
   function handleInput(e) {
-    props.setKeyWord(e.target.value)
+    setKeyWord(e.target.value)
   }
 
   //  Обрабатываем сабмит
   function handleSubmit(e) {
     e.preventDefault()
-    if(props.keyWord.length < 1) {
+    if(keyWord.length < 1) {
       setKeyWordError('Нужно ввести ключевое слово')
     } else {
       setKeyWordError('')
-      props.setIsSubmit(true)
-      props.setIsLoad(true)
+      setIsSubmit(true)
+      setIsLoad(true)
       setDisableSearchBtn(true)
     }
   }
@@ -41,12 +66,12 @@ function SearchForm(props) {
             <div className="search-form__container">
               <div className="search-form__middle">
               <div className="search-form__input-and-btn">
-                <input className="search-form__input" placeholder="&#128269; Фильм" required value={props.keyWord} onChange={handleInput}></input>
-                {props.isSavedMovie ? null : <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>}
+                <input className="search-form__input" placeholder="&#128269; Фильм" required value={keyWord} onChange={handleInput}></input>
+                <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>
                 <span className="search-form__line"></span>
               </div>
           
-              <FilterCheckbox checked={props.checked} setChecked={props.setChecked}></FilterCheckbox>
+              <FilterCheckbox checked={checked} setChecked={setChecked}></FilterCheckbox>
               </div>
             </div>
           </div>

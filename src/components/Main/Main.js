@@ -6,28 +6,33 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 
-function Main(props) {
+function Main({
+  isLoad, keyWord, setKeyWord, 
+  setIsSubmit, checked, setChecked, 
+  setIsLoad, movieCards, isSubmit, 
+  handleSaveMovie, handleDeleteMovie, savedMovieCards}) {
     return (
       <main className="main">
-        <Preloader isLoad={props.isLoad}></Preloader>
+        <Preloader isLoad={isLoad}></Preloader>
         <Header></Header>
         <SearchForm
-          keyWord={props.keyWord}
-          setKeyWord={props.setKeyWord}
-          setIsSubmit={props.setIsSubmit}
-          checked={props.checked}
-          setChecked={props.setChecked}
-          setIsLoad={props.setIsLoad}>
+          keyWord={keyWord}
+          setKeyWord={setKeyWord}
+          setIsSubmit={setIsSubmit}
+          checked={checked}
+          setChecked={setChecked}
+          setIsLoad={setIsLoad}>
         </SearchForm>
         <MoviesCardList 
-          movieCards={props.movieCards} 
-          keyWord={props.keyWord} 
-          isSubmit={props.isSubmit} 
-          checked={props.checked}
-          setIsLoad={props.setIsLoad}
-          handleSaveMovie={props.handleSaveMovie}
-          handleDeleteMovie={props.handleDeleteMovie}
-          savedMovieCards={props.savedMovieCards}>
+          movieCards={movieCards} 
+          keyWord={keyWord} 
+          setKeyWord={setKeyWord}
+          isSubmit={isSubmit} 
+          checked={checked}
+          setIsLoad={setIsLoad}
+          handleSaveMovie={handleSaveMovie}
+          handleDeleteMovie={handleDeleteMovie}
+          savedMovieCards={savedMovieCards}>
         </MoviesCardList>
         <Footer></Footer>
       </main>

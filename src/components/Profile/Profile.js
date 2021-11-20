@@ -6,7 +6,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import * as MainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader'
 
-function Profile(props) {
+function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
   const currentUser = useContext(CurrentUserContext);  //Контекст с инфой пользователя
 
@@ -21,7 +21,8 @@ function Profile(props) {
 
   const [formValid, setFormValid] = useState(false) // Стэйт для валидации кнопки
 
-  const [success, setSuccess] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [fail, setFail] = useState(false)
 
   
   // Задаём состояние кнопки исходя из наличия ошибок валидации
@@ -79,25 +80,26 @@ function Profile(props) {
 
   //  Обработчик для сабмита формы
   const handleSubmit = e => {
-    props.setIsLoad(true)
+    setIsLoad(true)
     e.preventDefault()
     MainApi.changeUserData({name, email})
-    .then((res) => {
-      props.setIsLoad(false)
-      setFormValid(false)
-      props.setCurrentUser(res.data)
-      setSuccess('Успешно обновлено =)')
+      .then((res) => {
+        setIsLoad(false)
+        setFormValid(false)
+        setCurrentUser(res.data)
+        setSuccess(true)
     })
-    .catch(err => {
-      console.log(err)
-      props.setIsLoad(false)
-    })
+      .catch(err => {
+        console.log(err)
+        setIsLoad(false)
+        setFail(true)
+      })
   }
 
 
     return (
       <div className="profile">
-        <Preloader isLoad={props.isLoad}></Preloader>
+        <Preloader isLoad={isLoad}></Preloader>
 
         <Header></Header>
 
@@ -121,9 +123,10 @@ function Profile(props) {
           </div>
 
           <div className="profile__buttons">
-            {(success) && <div className="profile__req-success">{success}</div>}
+            {(success) && <p className="profile__req-success">Успешно обновлено =)</p>}
+            {(fail) && <p className="profile__req-fail">Произошла ошибка =(</p>}
             <button className={(formValid ? "profile__button" : "profile__button profile__button_type_inactive")} type="submit">Редактировать</button>
-            <button className="profile__button profile__button_type_exit" onClick={props.signOut}>Выйти из аккаунта</button>
+            <button className="profile__button profile__button_type_exit" onClick={signOut}>Выйти из аккаунта</button>
           </div>
 
         </form>
