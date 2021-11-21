@@ -150,7 +150,8 @@ function App() {
           <Promo 
             loggedIn={loggedIn} 
             switchToRegistration={switchToRegistration} 
-            switchToLogin={switchToLogin}>
+            switchToLogin={switchToLogin}
+            goMain={goMain}>
           </Promo>
           <AboutProject></AboutProject>
           <Techs></Techs>

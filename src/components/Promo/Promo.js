@@ -3,7 +3,7 @@ import logo from '../../image/registerLogo.svg'
 import webLogo from '../../image/webLogo.svg'
 import Header from '../Header/Header';
 
-function Promo({loggedIn, switchToRegistration, switchToLogin}) {
+function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
   return (
     <div className="promo">
       <div className="promo__ears">
@@ -30,7 +30,8 @@ function Promo({loggedIn, switchToRegistration, switchToLogin}) {
         </div>
 
         <div className="promo__bottom">
-          <button className="promo__more-btn">Узнать больше</button>
+          {loggedIn ? <button className="promo__more-btn" onClick={goMain}>Узнать больше</button> :
+            <button className="promo__more-btn" onClick={switchToLogin}>Узнать больше</button>}
         </div>
       </div>
     </div>
