@@ -74,8 +74,8 @@ function SearchForm({
               <FilterCheckbox checked={checked} setChecked={setChecked}></FilterCheckbox>
               </div>
             </div>
+            {(keyWordError) && <div className="saved-movies__message">{keyWordError}</div>}
           </div>
-          {(keyWordError) && <div className="saved-movies__message">{keyWordError}</div>}
         </form>
     );
   }
