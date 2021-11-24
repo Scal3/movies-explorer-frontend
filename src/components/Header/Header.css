@@ -10,6 +10,12 @@
     height: 38px;
 }
 
+.header__logo:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition-duration: 300ms;
+}
+
 .header__desctop-container {
     display: none;
 }
@@ -109,6 +115,10 @@
         margin: 0 auto;
     }
 
+    .header__ears_type_promo {
+        padding: 0;
+    }
+
     .header__btn {
         display: none;
     }
@@ -119,5 +129,16 @@
     
     .header__desctop-btn {
         display: block;
+    }
+
+    .header__desctop-btn:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        transition-duration: 300ms;
+    }
+
+    .header__link_type_promo:hover {
+        cursor: pointer;
+        color: white;
     }
 }

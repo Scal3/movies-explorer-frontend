@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 
-function Header(props) {
+function Header({promoHeaderPadding, }) {
 
   const [isBurgerMenuBtnActive, setIsBurgerMenuBtnActive] = useState(false); // Стэйт для кнопки бургер-меню
 
@@ -18,15 +18,19 @@ function Header(props) {
 
     return (
       <header className="header">
-        <div className="header__ears">
-          <img className="header__logo" src={logo} alt="logo"></img>
+        <div className={promoHeaderPadding ? "header__ears header__ears_type_promo" : "header__ears"}>
+          <NavLink to="/" className="header__desctop-btn-link">
+            <img className="header__logo" src={logo} alt="logo"></img>
+          </NavLink>
 
           <div className="header__desctop-container">
-            <NavLink to="/movies" className="header__link">Фильмы</NavLink>
-            <NavLink to="/saved-movies" className="header__link">Сохранённые фильмы</NavLink>
+            <NavLink to="/movies" className={promoHeaderPadding ? "header__link header__link_type_promo" : "header__link"}>Фильмы</NavLink>
+            <NavLink to="/saved-movies" className={promoHeaderPadding ? "header__link header__link_type_promo" : "header__link"}>Сохранённые фильмы</NavLink>
           </div>
 
-          <button className="header__desctop-btn"></button>
+          <NavLink to="/profile" className="header__desctop-btn-link">
+            <button className="header__desctop-btn"></button>
+          </NavLink>
 
           <div className="header__btn" onClick={changeButtonStateTrue}>
             <span className="header__btn__third-line"/>

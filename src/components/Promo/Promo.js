@@ -1,20 +1,22 @@
 import './Promo.css'
 import logo from '../../image/registerLogo.svg'
 import webLogo from '../../image/webLogo.svg'
+import Header from '../Header/Header';
 
-function Promo() {
+function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
   return (
     <div className="promo">
       <div className="promo__ears">
+      {loggedIn ? <Header promoHeaderPadding={true}></Header> : 
         <div className="promo__top">
           <img className="promo__logo" src={logo} alt="logo"></img>
 
           <div className="promo__btns-container">
-            <button className="promo__btn">Регистрация</button>
+            <button className="promo__btn" onClick={switchToRegistration}>Регистрация</button>
 
-            <button className="promo__btn promo__btn_type_enter">Войти</button>
+            <button className="promo__btn promo__btn_type_enter" onClick={switchToLogin}>Войти</button>
           </div>
-        </div>
+        </div>}
 
         <div className="promo__middle">
           <img className="promo__web-img" src={webLogo} alt="web planet"></img>
@@ -28,7 +30,8 @@ function Promo() {
         </div>
 
         <div className="promo__bottom">
-          <button className="promo__more-btn">Узнать больше</button>
+          {loggedIn ? <button className="promo__more-btn" onClick={goMain}>Узнать больше</button> :
+            <button className="promo__more-btn" onClick={switchToLogin}>Узнать больше</button>}
         </div>
       </div>
     </div>
@@ -36,3 +39,4 @@ function Promo() {
 }
 
 export default Promo;
+
