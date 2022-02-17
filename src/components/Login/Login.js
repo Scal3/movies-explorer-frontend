@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import logo from '../../image/registerLogo.svg'
 import './Login.css';
-import * as MainApi from '../../utils/MainApi';
+import * as MainApi from '../../APIs/mainApi';
 import { Link } from 'react-router-dom'
 
 function Login({switchToRegistration, goMain, setLoggedIn}) {

@@ -16,7 +16,7 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import * as MainApi from '../../utils/MainApi';
+import * as MainApi from '../../APIs/mainApi';
 import { isSavedMovie } from '../../utils/constants'
 
 

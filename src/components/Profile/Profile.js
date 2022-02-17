@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import './Profile.css';
 import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import * as MainApi from '../../utils/MainApi';
+import * as MainApi from '../../APIs/mainApi';
 import Preloader from '../Preloader/Preloader'
 
 function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
