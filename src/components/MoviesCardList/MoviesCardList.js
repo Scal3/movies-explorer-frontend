@@ -1,7 +1,9 @@
 import './MoviesCardList.css'
+
+import { useEffect, useState } from 'react'
+
 import MovieCard from '../MovieCard/MovieCard'
 import * as filteredFunctions from '../../utils/filteredFunctions'
-import { useEffect, useState } from 'react'
 import * as MoviesApi from '../../APIs/moviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
 

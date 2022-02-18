@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react'
-import logo from '../../image/registerLogo.svg'
 import './Login.css';
-import * as MainApi from '../../APIs/mainApi';
-import { Link } from 'react-router-dom'
 
-function Login({switchToRegistration, goMain, setLoggedIn}) {
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
+import logo from '../../image/registerLogo.svg'
+import * as MainApi from '../../APIs/mainApi';
+import { setLoggedIn } from '../../actions/actions';
+
+function Login({ switchToRegistration, goMain }) {
+
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [pass, setPass] = useState('')  // Стэйт для пароля
@@ -73,7 +79,7 @@ function Login({switchToRegistration, goMain, setLoggedIn}) {
     .then(() => {
       setEmail('')
       setPass('')
-      setLoggedIn(true)
+      dispatch(setLoggedIn())
       goMain()
     })
     .catch((err) => {

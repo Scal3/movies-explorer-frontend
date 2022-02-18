@@ -1,4 +1,11 @@
-import { REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_SAVED_MOVIE } from "../actions/types"
+import { 
+    REMOVE_MOVIE, 
+    SET_CURRENT_USER, 
+    SET_CURRENT_USER_MOVIES, 
+    SET_LOGGED_IN, 
+    SET_LOGGOUT, 
+    SET_SAVED_MOVIE 
+} from "../actions/types"
 
 const initialState = {
     currentUser: null,
@@ -42,6 +49,20 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 currentUsersMovies: newMoviesArray
+            }
+        }
+
+        case SET_LOGGED_IN: {
+            return {
+                ...state,
+                loggedIn: true
+            }
+        }
+
+        case SET_LOGGOUT: {
+            return {
+                ...state,
+                loggedIn: false
             }
         }
 

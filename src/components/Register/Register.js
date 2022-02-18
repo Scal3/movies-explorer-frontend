@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react'
-import logo from '../../image/registerLogo.svg'
 import './Register.css';
-import * as MainApi from '../../APIs/mainApi';
-import { Link } from 'react-router-dom'
 
-function Register({setLoggedIn, goMain, switchToLogin}) {
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
+import logo from '../../image/registerLogo.svg'
+import * as MainApi from '../../APIs/mainApi';
+import { setLoggedIn } from '../../actions/actions';
+
+const Register = ({ goMain, switchToLogin }) => {
+
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('') // Стэйт для имени
@@ -92,7 +98,7 @@ function Register({setLoggedIn, goMain, switchToLogin}) {
           setEmail('')
           setPass('')
           setName('')
-          setLoggedIn(true)
+          dispatch(setLoggedIn())
           goMain()
         })
         .catch((err) => console.log(err))

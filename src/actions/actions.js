@@ -1,5 +1,5 @@
 import * as mainApi from '../APIs/mainApi'
-import { REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_SAVED_MOVIE } from './types'
+import { REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
 
 
 export const setCurrentUser = userData => ({ type: SET_CURRENT_USER, payload: { userData } })
@@ -61,3 +61,7 @@ export const deleteMovie = (id) => {
             .catch((err) => console.log(err))
     }
 }
+
+export const setLoggedIn = () => ({ type: SET_LOGGED_IN })
+
+export const setLoggout = () => ({ type: SET_LOGGOUT })

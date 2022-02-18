@@ -1,13 +1,20 @@
 import './Promo.css'
+
+import { useSelector } from "react-redux";
+
 import logo from '../../image/registerLogo.svg'
 import webLogo from '../../image/webLogo.svg'
 import Header from '../Header/Header';
+import { loggedIn } from "../../selectors/selectors";
 
-function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
+function Promo({ switchToRegistration, switchToLogin, goMain}) {
+
+  const isLoggedIn = useSelector(loggedIn)  
+
   return (
     <div className="promo">
       <div className="promo__ears">
-      {loggedIn ? <Header promoHeaderPadding={true}></Header> : 
+      {isLoggedIn ? <Header promoHeaderPadding={true}></Header> : 
         <div className="promo__top">
           <img className="promo__logo" src={logo} alt="logo"></img>
 
@@ -30,7 +37,7 @@ function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
         </div>
 
         <div className="promo__bottom">
-          {loggedIn ? <button className="promo__more-btn" onClick={goMain}>Узнать больше</button> :
+          {isLoggedIn ? <button className="promo__more-btn" onClick={goMain}>Узнать больше</button> :
             <button className="promo__more-btn" onClick={switchToLogin}>Узнать больше</button>}
         </div>
       </div>
