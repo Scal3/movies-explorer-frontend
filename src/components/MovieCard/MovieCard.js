@@ -1,10 +1,18 @@
 import './MovieCard.css'
+
 import { useState, useContext, useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+
 import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { deleteMovie, saveMovie } from '../../actions/actions';
 
 function MovieCard({
   savedMovieCards, movie, isSavedMovie, 
   handleDeleteMovie, handleSaveMovie}) {
+
+
+  const dispatch = useDispatch()
+
 
   let buttonMobile // Кнопка лайка для мобильника
   let buttonDesctop // Кнопка лайка для десктопа
@@ -28,12 +36,16 @@ function MovieCard({
     setIsBtnActive(!isBtnActive)
 
     if (isSavedMovie === true) {
-      handleDeleteMovie(movie._id)
+      dispatch(deleteMovie(movie._id))
+      // handleDeleteMovie(movie._id)
     } else if (isSavedMovie === false) {
       handleSaveMovie(movie)
+      // dispatch(saveMovie(movie))
     } else if (isBtnActive === false){
       handleSaveMovie(movie)
+      // dispatch(saveMovie(movie))
     } else if (isBtnActive === true){
+      // dispatch(deleteMovie(findMovie._id))
       handleDeleteMovie(findMovie._id)
     }
   }
