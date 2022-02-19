@@ -1,5 +1,5 @@
 import * as mainApi from '../APIs/mainApi'
-import { CHANGE_USER_DATA, REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
+import { CHANGE_USER_DATA, REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_IS_SUBMIT_FALSE, SET_IS_SUBMIT_TRUE, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
 
 
 export const setCurrentUser = userData => ({ type: SET_CURRENT_USER, payload: { userData } })
@@ -70,13 +70,13 @@ export const setLoggout = () => ({ type: SET_LOGGOUT })
 
 
 
-export const checkValidToken = (historyHook, location) => (dispatch) => {
+export const checkValidToken = (historyHookPush, location) => (dispatch) => {
     const token = localStorage.getItem('token')
 
     mainApi.getContent(token)
       .then(() => {
         dispatch(setLoggedIn())
-        historyHook(location)
+        historyHookPush(location)
       })
       .catch(err => {
         if(!token) {
@@ -105,3 +105,8 @@ export const changeUserData = (name, email, { setIsLoad, setFormValid, setSucces
         setFail(true)
     })
 }
+
+
+export const setIsSubmitTrue = () => ({ type: SET_IS_SUBMIT_TRUE })
+
+export const setIsSubmitFalse = () => ({ type: SET_IS_SUBMIT_FALSE })

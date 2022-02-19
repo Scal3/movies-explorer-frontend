@@ -30,7 +30,6 @@ const App = () => {
   const history = useHistory()
   const location = useLocation()
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
-  const [isSubmit, setIsSubmit] = useState(false) // Стэйт отображения результата поиска
   const [checked, setChecked] = useState(false) // Стэйт для чекбокса "короткометражки"
   const [isLoad, setIsLoad] = useState(false) //Стэйт для прелоадера
 
@@ -39,7 +38,7 @@ const App = () => {
     if (localStorage.getItem('token')){
       dispatch(checkValidToken(history.push, location))
     }
-  }, [history] )
+  }, [dispatch, history.push] )
 
 
   // Если с токеном всё ок, грузим данные пользователя
@@ -47,7 +46,7 @@ const App = () => {
     if(isLoggedIn) {
       dispatch(getUserData())
     }
-  }, [isLoggedIn] )
+  }, [isLoggedIn, dispatch] )
 
 
   return (
@@ -81,10 +80,8 @@ const App = () => {
           {isLoggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           <Main 
             keyWord={keyWord} 
-            isSubmit={isSubmit} 
             checked={checked}
             setKeyWord={setKeyWord}
-            setIsSubmit={setIsSubmit}
             setChecked={setChecked}
             isLoad={isLoad} 
             setIsLoad={setIsLoad}
@@ -99,7 +96,6 @@ const App = () => {
           <SearchForm
             keyWord={keyWord}
             setKeyWord={setKeyWord}
-            setIsSubmit={setIsSubmit}
             setChecked={setChecked}
             setIsLoad={setIsLoad}
             checked={checked}
@@ -107,7 +103,6 @@ const App = () => {
           </SearchForm>
           <SavedMovies
             keyWord={keyWord} 
-            isSubmit={isSubmit} 
             checked={checked}
             isSavedMovie={isSavedMovie}
             setKeyWord={setKeyWord}

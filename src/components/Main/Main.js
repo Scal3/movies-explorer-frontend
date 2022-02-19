@@ -8,8 +8,8 @@ import Preloader from '../Preloader/Preloader';
 
 function Main({
   isLoad, keyWord, setKeyWord, 
-  setIsSubmit, checked, setChecked, 
-  setIsLoad, movieCards, isSubmit }) {
+  checked, setChecked, 
+  setIsLoad, movieCards }) {
     return (
       <main className="main">
         <Preloader isLoad={isLoad}></Preloader>
@@ -17,7 +17,6 @@ function Main({
         <SearchForm
           keyWord={keyWord}
           setKeyWord={setKeyWord}
-          setIsSubmit={setIsSubmit}
           checked={checked}
           setChecked={setChecked}
           setIsLoad={setIsLoad}
@@ -27,7 +26,6 @@ function Main({
           movieCards={movieCards} 
           keyWord={keyWord} 
           setKeyWord={setKeyWord}
-          isSubmit={isSubmit} 
           checked={checked}
           setIsLoad={setIsLoad}
         >

@@ -1,15 +1,19 @@
 import './MoviesCardList.css'
 
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import MovieCard from '../MovieCard/MovieCard'
 import * as filteredFunctions from '../../utils/filteredFunctions'
 import * as MoviesApi from '../../APIs/moviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
+import { getIsSubmitValue } from '../../selectors/selectors'
 
 function MoviesCardList({
-  keyWord, checked, isSubmit, 
+  keyWord, checked, 
   setIsLoad, setKeyWord }) {
+
+  const isSubmit = useSelector(getIsSubmitValue)
 
   const [movieCards, setMovieCards] = useState([]) //Стэйт массива для карточек
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек

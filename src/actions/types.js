@@ -13,3 +13,7 @@ export const SET_LOGGED_IN = 'setLoggedIn'
 export const SET_LOGGOUT = 'setLoggout'
 
 export const CHANGE_USER_DATA = 'changeUserData'
+
+export const SET_IS_SUBMIT_TRUE = 'setIsSubmitTrue'
+
+export const SET_IS_SUBMIT_FALSE = 'setIsSubmitFalse'

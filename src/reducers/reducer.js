@@ -3,6 +3,8 @@ import {
     REMOVE_MOVIE, 
     SET_CURRENT_USER, 
     SET_CURRENT_USER_MOVIES, 
+    SET_IS_SUBMIT_FALSE, 
+    SET_IS_SUBMIT_TRUE, 
     SET_LOGGED_IN, 
     SET_LOGGOUT, 
     SET_SAVED_MOVIE 
@@ -12,7 +14,7 @@ const initialState = {
     currentUser: null,
     currentUsersMovies: [],
     loggedIn: false,
-
+    isSubmit: false
 }
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -74,6 +76,20 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 currentUser: { email, name, id }
+            }
+        }
+
+        case SET_IS_SUBMIT_TRUE: {
+            return {
+                ...state,
+                isSubmit: true
+            }
+        }
+
+        case SET_IS_SUBMIT_FALSE: {
+            return {
+                ...state,
+                isSubmit: false
             }
         }
 

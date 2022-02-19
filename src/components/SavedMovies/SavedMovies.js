@@ -1,20 +1,20 @@
 import './SavedMovies.css'
 
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
 import * as filteredFunctions from '../../utils/filteredFunctions'
-import { getCurrentUser, getCurrentUserMovies } from '../../selectors/selectors';
+import { getCurrentUser, getCurrentUserMovies, getIsSubmitValue } from '../../selectors/selectors';
 
 function SavedMovies({
   keyWord, checked, 
-  isSavedMovie,
-  isSubmit, setKeyWord}) {
+  isSavedMovie, setKeyWord}) {
 
 
   const currentUser = useSelector(getCurrentUser)
   const currentUserMovies = useSelector(getCurrentUserMovies)
+  const isSubmit = useSelector(getIsSubmitValue)
 
   const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
 

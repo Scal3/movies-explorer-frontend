@@ -1,11 +1,17 @@
-import { useState, useEffect } from 'react'
 import './SearchForm.css'
+
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { entrBtn } from '../../utils/constants'
+import { setIsSubmitFalse, setIsSubmitTrue } from '../../actions/actions';
 
-function SearchForm({
-  keyWord, setIsSubmit, setKeyWord, 
-  setIsLoad, checked, setChecked}) {
+const SearchForm = ({
+  keyWord, setKeyWord, 
+  setIsLoad, checked, setChecked}) => {
+
+  const dispatch = useDispatch()
 
   const [keyWordError, setKeyWordError] = useState('') // Стэйт для ошибок ключевого слова
   const [disableSearchBtn, setDisableSearchBtn] = useState(false)
@@ -13,7 +19,7 @@ function SearchForm({
   //  Отменяем отображение фильмов, если нет ключевого слова
   useEffect(() => {
     if(keyWord.length < 1) {
-      setIsSubmit(false)
+      dispatch(setIsSubmitFalse())
       setDisableSearchBtn(false)
     }
   }, [keyWord] )
@@ -53,7 +59,7 @@ function SearchForm({
       setKeyWordError('Нужно ввести ключевое слово')
     } else {
       setKeyWordError('')
-      setIsSubmit(true)
+      dispatch(setIsSubmitTrue())
       setIsLoad(true)
       setDisableSearchBtn(true)
     }
