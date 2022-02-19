@@ -5,40 +5,30 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
 import * as filteredFunctions from '../../utils/filteredFunctions'
-import { getCurrentUser } from '../../selectors/selectors';
+import { getCurrentUser, getCurrentUserMovies } from '../../selectors/selectors';
 
 function SavedMovies({
-  savedMovieCards, keyWord, checked, 
-  isSavedMovie, handleSaveMovie, handleDeleteMovie, 
+  keyWord, checked, 
+  isSavedMovie,
   isSubmit, setKeyWord}) {
 
-  // Контекст с инфой пользователя
+
   const currentUser = useSelector(getCurrentUser)
+  const currentUserMovies = useSelector(getCurrentUserMovies)
 
-
-  const [currentMovies, setCurrentMovies] = useState([]); // Стэйт сохранённых фильмов
   const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
 
-  // При изменении массива сохранённых фильмов переопределяем состояние
-  useEffect(() => {
-    setCurrentMovies(savedMovieCards)
-  }, [savedMovieCards])
 
   // Очищаем инпут формы поиска
   useEffect(() => {
     setKeyWord('')
   }, [])
 
-  // Массив фильмов сохранённых текущим пользователем
-  const currentUserMovieArray = currentMovies.filter(movie => {
-    return movie.owner === currentUser.id
-  })
-
   // Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(currentUserMovieArray, submit)
+  const movies = filteredFunctions.filteredMovies(currentUserMovies, submit)
 
   // Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovieArray, submit)
+  const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovies, submit)
 
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
   const result = checked ? shortMovies : movies
@@ -47,16 +37,14 @@ function SavedMovies({
 
   return (
     <div className="saved-movies">
-      {currentUserMovieArray.length > 0 ? 
+      {currentUserMovies.length > 0 ? 
         (result.length > 0 ? (result.map((movie) => {
           return (
             (movie.owner === currentUser.id ? 
               <MovieCard
                 isSavedMovie={isSavedMovie} 
-                key={movie._id} movie={movie} 
-                handleSaveMovie={handleSaveMovie} 
-                handleDeleteMovie={handleDeleteMovie}
-                savedMovieCards={savedMovieCards}
+                key={movie._id} 
+                movie={movie} 
               /> : null)
             )
           }))

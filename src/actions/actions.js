@@ -74,7 +74,7 @@ export const checkValidToken = (historyHook, location) => (dispatch) => {
     const token = localStorage.getItem('token')
 
     mainApi.getContent(token)
-      .then(res => {
+      .then(() => {
         dispatch(setLoggedIn())
         historyHook(location)
       })

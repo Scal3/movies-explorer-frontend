@@ -9,8 +9,7 @@ import { numberOfCards, countAddCard } from '../../utils/constants'
 
 function MoviesCardList({
   keyWord, checked, isSubmit, 
-  setIsLoad, setKeyWord, handleSaveMovie, 
-  handleDeleteMovie, savedMovieCards}) {
+  setIsLoad, setKeyWord }) {
 
   const [movieCards, setMovieCards] = useState([]) //Стэйт массива для карточек
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек
@@ -65,9 +64,6 @@ function MoviesCardList({
                       <MovieCard
                         key={movie.id} 
                         movie={movie} 
-                        handleSaveMovie={handleSaveMovie} 
-                        handleDeleteMovie={handleDeleteMovie}
-                        savedMovieCards={savedMovieCards}
                       />
                     )).slice(0, cardsLimit)}
                 </div>

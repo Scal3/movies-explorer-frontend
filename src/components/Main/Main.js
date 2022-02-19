@@ -9,8 +9,7 @@ import Preloader from '../Preloader/Preloader';
 function Main({
   isLoad, keyWord, setKeyWord, 
   setIsSubmit, checked, setChecked, 
-  setIsLoad, movieCards, isSubmit, 
-  handleSaveMovie, handleDeleteMovie, savedMovieCards}) {
+  setIsLoad, movieCards, isSubmit }) {
     return (
       <main className="main">
         <Preloader isLoad={isLoad}></Preloader>
@@ -21,7 +20,8 @@ function Main({
           setIsSubmit={setIsSubmit}
           checked={checked}
           setChecked={setChecked}
-          setIsLoad={setIsLoad}>
+          setIsLoad={setIsLoad}
+        >
         </SearchForm>
         <MoviesCardList 
           movieCards={movieCards} 
@@ -30,9 +30,7 @@ function Main({
           isSubmit={isSubmit} 
           checked={checked}
           setIsLoad={setIsLoad}
-          handleSaveMovie={handleSaveMovie}
-          handleDeleteMovie={handleDeleteMovie}
-          savedMovieCards={savedMovieCards}>
+        >
         </MoviesCardList>
         <Footer></Footer>
       </main>

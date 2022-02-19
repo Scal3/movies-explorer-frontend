@@ -18,8 +18,6 @@ import Main from '../Main/Main';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import * as MainApi from '../../APIs/mainApi';
 import { isSavedMovie } from '../../utils/constants'
 import { getUserData, setLoggedIn, setLoggout, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
@@ -34,8 +32,6 @@ function App() {
 
   const history = useHistory()
   const location = useLocation()
-  const [currentUser, setCurrentUser] = useState({})  // Стэйт данных пользователя
-  const [savedMovieCards, setSavedMovieCards] = useState([]); // Стэйт массива для сохранённых фильмов
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
   const [isSubmit, setIsSubmit] = useState(false) // Стэйт отображения результата поиска
   const [checked, setChecked] = useState(false) // Стэйт для чекбокса "короткометражки"
@@ -52,17 +48,7 @@ function App() {
   // Если с токеном всё ок, грузим данные пользователя
   useEffect(() => {
     if(isLoggedIn) {
-      Promise.all([MainApi.getUserInfo(), MainApi.getSavedMovies()])
-      .then(([userData, savedMoviesData]) => {
-        setCurrentUser(userData)
-        setSavedMovieCards(savedMoviesData.movies)
-
-
-        dispatch(getUserData())
-      })
-      .catch((e) => {
-        console.log(`Ошибка загрузки данных: ${e}`)
-      })
+      dispatch(getUserData())
     }
   }, [isLoggedIn] )
 
@@ -89,42 +75,10 @@ function App() {
     dispatch(setLoggout())
   }
 
-  // Сохраняем фильм 
-  const handleSaveMovie = (movie) => {
-    const {
-      country, director, duration,
-      year, description, image,
-      id, trailerLink, nameRU,
-      nameEN,
-    } = movie;
-
-    MainApi.saveMovie(
-        {
-          country, director, duration,
-          year, description, image,
-          id, trailerLink, nameRU,
-          nameEN,
-        }
-      )
-      .then((res) => {
-        setSavedMovieCards([res.movie, ...savedMovieCards])
-      })
-      .catch((err) => console.log(err))
-  }
-  
-  // Удаляем фильм
-  const handleDeleteMovie = (id) => {
-    MainApi.deleteMovie(id)
-      .then((res) => {
-        setSavedMovieCards(savedMovieCards.filter((item) => item._id !== id));
-      })
-      .catch((err) => console.log(err))
-  }
 
 
   return (
     <div className="app">
-      <CurrentUserContext.Provider value={currentUser}>
       <Switch>
 
         {/* Регистрация */}
@@ -174,9 +128,6 @@ function App() {
             setChecked={setChecked}
             isLoad={isLoad} 
             setIsLoad={setIsLoad}
-            handleSaveMovie={handleSaveMovie}
-            handleDeleteMovie={handleDeleteMovie}
-            savedMovieCards={savedMovieCards}
           >
           </Main>
         </Route>
@@ -195,12 +146,9 @@ function App() {
           >
           </SearchForm>
           <SavedMovies
-            savedMovieCards={savedMovieCards}
             keyWord={keyWord} 
             isSubmit={isSubmit} 
             checked={checked}
-            handleSaveMovie={handleSaveMovie}
-            handleDeleteMovie={handleDeleteMovie}
             isSavedMovie={isSavedMovie}
             setKeyWord={setKeyWord}
           >
@@ -215,7 +163,6 @@ function App() {
             signOut={signOut} 
             isLoad={isLoad} 
             setIsLoad={setIsLoad} 
-            setCurrentUser={setCurrentUser}
           >
           </Profile>
         </Route>
@@ -226,7 +173,6 @@ function App() {
         </Route>
 
       </Switch>
-      </CurrentUserContext.Provider>
     </div>
   );
 }
