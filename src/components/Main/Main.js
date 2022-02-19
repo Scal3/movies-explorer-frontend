@@ -6,10 +6,9 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 
-function Main({
+const Main = ({
   isLoad, keyWord, setKeyWord, 
-  checked, setChecked, 
-  setIsLoad, movieCards }) {
+  setIsLoad, movieCards }) => {
     return (
       <main className="main">
         <Preloader isLoad={isLoad}></Preloader>
@@ -17,8 +16,6 @@ function Main({
         <SearchForm
           keyWord={keyWord}
           setKeyWord={setKeyWord}
-          checked={checked}
-          setChecked={setChecked}
           setIsLoad={setIsLoad}
         >
         </SearchForm>
@@ -26,7 +23,6 @@ function Main({
           movieCards={movieCards} 
           keyWord={keyWord} 
           setKeyWord={setKeyWord}
-          checked={checked}
           setIsLoad={setIsLoad}
         >
         </MoviesCardList>

@@ -8,8 +8,7 @@ import { entrBtn } from '../../utils/constants'
 import { setIsSubmitFalse, setIsSubmitTrue } from '../../actions/actions';
 
 const SearchForm = ({
-  keyWord, setKeyWord, 
-  setIsLoad, checked, setChecked}) => {
+  keyWord, setKeyWord, setIsLoad }) => {
 
   const dispatch = useDispatch()
 
@@ -76,8 +75,8 @@ const SearchForm = ({
                 <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>
                 <span className="search-form__line"></span>
               </div>
-          
-              <FilterCheckbox checked={checked} setChecked={setChecked}></FilterCheckbox>
+              
+              <FilterCheckbox></FilterCheckbox>
               </div>
             </div>
             {(keyWordError) && <div className="saved-movies__message">{keyWordError}</div>}

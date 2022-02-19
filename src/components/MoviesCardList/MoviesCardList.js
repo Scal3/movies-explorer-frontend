@@ -7,13 +7,13 @@ import MovieCard from '../MovieCard/MovieCard'
 import * as filteredFunctions from '../../utils/filteredFunctions'
 import * as MoviesApi from '../../APIs/moviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
-import { getIsSubmitValue } from '../../selectors/selectors'
+import { getIsCheckedValue, getIsSubmitValue } from '../../selectors/selectors'
 
 function MoviesCardList({
-  keyWord, checked, 
-  setIsLoad, setKeyWord }) {
+  keyWord, setIsLoad, setKeyWord }) {
 
   const isSubmit = useSelector(getIsSubmitValue)
+  const isChecked = useSelector(getIsCheckedValue)
 
   const [movieCards, setMovieCards] = useState([]) //Стэйт массива для карточек
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек
@@ -31,7 +31,7 @@ function MoviesCardList({
   const shortMovies = filteredFunctions.filteredShortfilms(movieCards, keyWord)
 
   //  В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = checked ? shortMovies : movies
+  const result = isChecked ? shortMovies : movies
 
   // Обращаемся ко всем фильмам, если нажата кнопка поиска
   useEffect(() => {

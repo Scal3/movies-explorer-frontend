@@ -17,3 +17,5 @@ export const CHANGE_USER_DATA = 'changeUserData'
 export const SET_IS_SUBMIT_TRUE = 'setIsSubmitTrue'
 
 export const SET_IS_SUBMIT_FALSE = 'setIsSubmitFalse'
+
+export const TOGGLE_IS_CHECKED = 'toggleIsChecked'

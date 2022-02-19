@@ -1,5 +1,16 @@
 import * as mainApi from '../APIs/mainApi'
-import { CHANGE_USER_DATA, REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_IS_SUBMIT_FALSE, SET_IS_SUBMIT_TRUE, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
+import { 
+    CHANGE_USER_DATA, 
+    REMOVE_MOVIE, 
+    TOGGLE_IS_CHECKED, 
+    SET_CURRENT_USER, 
+    SET_CURRENT_USER_MOVIES, 
+    SET_IS_SUBMIT_FALSE, 
+    SET_IS_SUBMIT_TRUE, 
+    SET_LOGGED_IN, 
+    SET_LOGGOUT, 
+    SET_SAVED_MOVIE 
+} from './types'
 
 
 export const setCurrentUser = userData => ({ type: SET_CURRENT_USER, payload: { userData } })
@@ -110,3 +121,5 @@ export const changeUserData = (name, email, { setIsLoad, setFormValid, setSucces
 export const setIsSubmitTrue = () => ({ type: SET_IS_SUBMIT_TRUE })
 
 export const setIsSubmitFalse = () => ({ type: SET_IS_SUBMIT_FALSE })
+
+export const toggleIsChecked = () => ({ type: TOGGLE_IS_CHECKED })

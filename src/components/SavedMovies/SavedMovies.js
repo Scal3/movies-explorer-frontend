@@ -5,16 +5,16 @@ import { useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
 import * as filteredFunctions from '../../utils/filteredFunctions'
-import { getCurrentUser, getCurrentUserMovies, getIsSubmitValue } from '../../selectors/selectors';
+import { getCurrentUser, getCurrentUserMovies, getIsCheckedValue, getIsSubmitValue } from '../../selectors/selectors';
 
 function SavedMovies({
-  keyWord, checked, 
-  isSavedMovie, setKeyWord}) {
+  keyWord, isSavedMovie, setKeyWord}) {
 
 
   const currentUser = useSelector(getCurrentUser)
   const currentUserMovies = useSelector(getCurrentUserMovies)
   const isSubmit = useSelector(getIsSubmitValue)
+  const isChecked = useSelector(getIsCheckedValue)
 
   const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
 
@@ -31,7 +31,7 @@ function SavedMovies({
   const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovies, submit)
 
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = checked ? shortMovies : movies
+  const result = isChecked ? shortMovies : movies
 
 
 

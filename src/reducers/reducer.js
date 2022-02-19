@@ -3,6 +3,7 @@ import {
     REMOVE_MOVIE, 
     SET_CURRENT_USER, 
     SET_CURRENT_USER_MOVIES, 
+    TOGGLE_IS_CHECKED, 
     SET_IS_SUBMIT_FALSE, 
     SET_IS_SUBMIT_TRUE, 
     SET_LOGGED_IN, 
@@ -14,7 +15,8 @@ const initialState = {
     currentUser: null,
     currentUsersMovies: [],
     loggedIn: false,
-    isSubmit: false
+    isSubmit: false,
+    isChecked: false
 }
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -90,6 +92,13 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 isSubmit: false
+            }
+        }
+
+        case TOGGLE_IS_CHECKED: {
+            return {
+                ...state,
+                isChecked: !state.isChecked
             }
         }
 

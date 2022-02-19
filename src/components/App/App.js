@@ -30,7 +30,6 @@ const App = () => {
   const history = useHistory()
   const location = useLocation()
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
-  const [checked, setChecked] = useState(false) // Стэйт для чекбокса "короткометражки"
   const [isLoad, setIsLoad] = useState(false) //Стэйт для прелоадера
 
   //Проверка токена
@@ -80,9 +79,7 @@ const App = () => {
           {isLoggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           <Main 
             keyWord={keyWord} 
-            checked={checked}
             setKeyWord={setKeyWord}
-            setChecked={setChecked}
             isLoad={isLoad} 
             setIsLoad={setIsLoad}
           >
@@ -96,14 +93,11 @@ const App = () => {
           <SearchForm
             keyWord={keyWord}
             setKeyWord={setKeyWord}
-            setChecked={setChecked}
             setIsLoad={setIsLoad}
-            checked={checked}
           >
           </SearchForm>
           <SavedMovies
             keyWord={keyWord} 
-            checked={checked}
             isSavedMovie={isSavedMovie}
             setKeyWord={setKeyWord}
           >
