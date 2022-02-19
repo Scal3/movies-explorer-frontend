@@ -8,11 +8,11 @@ import { useHistory } from 'react-router';
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader'
 import { getCurrentUser } from '../../selectors/selectors';
-import { changeUserData } from '../../actions/actions'
+import { changeUserData, setIsLoadTrue } from '../../actions/actions'
 import { signOut } from '../../utils/routerFunctions';
 
 
-function Profile({ setIsLoad, isLoad }) {
+const Profile = () => {
 
   const history = useHistory()
   const dispatch = useDispatch()
@@ -88,16 +88,16 @@ function Profile({ setIsLoad, isLoad }) {
 
 
   //  Обработчик для сабмита формы
-  const handleSubmit = e => {
-    setIsLoad(true)
-    e.preventDefault()
-    dispatch(changeUserData(name, email, { setIsLoad, setFormValid, setSuccess, setFail }))
+  const handleSubmit = event => {
+    event.preventDefault()
+    dispatch(setIsLoadTrue())
+    dispatch(changeUserData(name, email, { setFormValid, setSuccess, setFail }))
   }
 
 
     return (
       <div className="profile">
-        <Preloader isLoad={isLoad}></Preloader>
+        <Preloader></Preloader>
 
         <Header></Header>
 

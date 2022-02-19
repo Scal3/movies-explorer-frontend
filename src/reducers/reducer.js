@@ -8,7 +8,9 @@ import {
     SET_IS_SUBMIT_TRUE, 
     SET_LOGGED_IN, 
     SET_LOGGOUT, 
-    SET_SAVED_MOVIE 
+    SET_SAVED_MOVIE, 
+    SET_IS_LOAD_TRUE,
+    SET_IS_LOAD_FALSE
 } from "../actions/types"
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
     currentUsersMovies: [],
     loggedIn: false,
     isSubmit: false,
-    isChecked: false
+    isChecked: false,
+    isLoad: false
 }
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -99,6 +102,20 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 isChecked: !state.isChecked
+            }
+        }
+
+        case SET_IS_LOAD_TRUE: {
+            return {
+                ...state,
+                isLoad: true
+            }
+        }
+
+        case SET_IS_LOAD_FALSE: {
+            return {
+                ...state,
+                isLoad: false
             }
         }
 

@@ -6,24 +6,20 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 
-const Main = ({
-  isLoad, keyWord, setKeyWord, 
-  setIsLoad, movieCards }) => {
+const Main = ({ keyWord, setKeyWord, movieCards }) => {
     return (
       <main className="main">
-        <Preloader isLoad={isLoad}></Preloader>
+        <Preloader></Preloader>
         <Header></Header>
         <SearchForm
           keyWord={keyWord}
           setKeyWord={setKeyWord}
-          setIsLoad={setIsLoad}
         >
         </SearchForm>
         <MoviesCardList 
           movieCards={movieCards} 
           keyWord={keyWord} 
           setKeyWord={setKeyWord}
-          setIsLoad={setIsLoad}
         >
         </MoviesCardList>
         <Footer></Footer>

@@ -30,7 +30,6 @@ const App = () => {
   const history = useHistory()
   const location = useLocation()
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
-  const [isLoad, setIsLoad] = useState(false) //Стэйт для прелоадера
 
   //Проверка токена
   useEffect(() => {
@@ -80,8 +79,6 @@ const App = () => {
           <Main 
             keyWord={keyWord} 
             setKeyWord={setKeyWord}
-            isLoad={isLoad} 
-            setIsLoad={setIsLoad}
           >
           </Main>
         </Route>
@@ -93,7 +90,6 @@ const App = () => {
           <SearchForm
             keyWord={keyWord}
             setKeyWord={setKeyWord}
-            setIsLoad={setIsLoad}
           >
           </SearchForm>
           <SavedMovies
@@ -108,11 +104,7 @@ const App = () => {
         {/* Профиль */}
         <Route path="/profile">
           {isLoggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
-          <Profile
-            isLoad={isLoad} 
-            setIsLoad={setIsLoad} 
-          >
-          </Profile>
+          <Profile></Profile>
         </Route>
 
         {/* Ошибка 404 */}

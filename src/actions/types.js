@@ -19,3 +19,7 @@ export const SET_IS_SUBMIT_TRUE = 'setIsSubmitTrue'
 export const SET_IS_SUBMIT_FALSE = 'setIsSubmitFalse'
 
 export const TOGGLE_IS_CHECKED = 'toggleIsChecked'
+
+export const SET_IS_LOAD_TRUE = 'setIsLoadTrue'
+
+export const SET_IS_LOAD_FALSE = 'setIsLoadFalse'

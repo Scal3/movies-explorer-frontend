@@ -1,17 +1,18 @@
 import './MoviesCardList.css'
 
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import MovieCard from '../MovieCard/MovieCard'
 import * as filteredFunctions from '../../utils/filteredFunctions'
 import * as MoviesApi from '../../APIs/moviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
 import { getIsCheckedValue, getIsSubmitValue } from '../../selectors/selectors'
+import { setIsLoadFalse, setIsSubmitFalse } from '../../actions/actions'
 
-function MoviesCardList({
-  keyWord, setIsLoad, setKeyWord }) {
+const MoviesCardList = ({ keyWord, setKeyWord }) => {
 
+  const dispatch = useDispatch()
   const isSubmit = useSelector(getIsSubmitValue)
   const isChecked = useSelector(getIsCheckedValue)
 
@@ -39,7 +40,8 @@ function MoviesCardList({
       MoviesApi.getMovies()
       .then((movies) =>{
         setMovieCards(movies)
-        setIsLoad(false)
+        dispatch(setIsSubmitFalse())
+        dispatch(setIsLoadFalse())
       })
       .catch((err) => {
         console.log(err)

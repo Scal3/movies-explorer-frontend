@@ -5,10 +5,9 @@ import { useDispatch } from 'react-redux';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { entrBtn } from '../../utils/constants'
-import { setIsSubmitFalse, setIsSubmitTrue } from '../../actions/actions';
+import { setIsLoadTrue, setIsSubmitFalse, setIsSubmitTrue } from '../../actions/actions';
 
-const SearchForm = ({
-  keyWord, setKeyWord, setIsLoad }) => {
+const SearchForm = ({ keyWord, setKeyWord }) => {
 
   const dispatch = useDispatch()
 
@@ -59,7 +58,7 @@ const SearchForm = ({
     } else {
       setKeyWordError('')
       dispatch(setIsSubmitTrue())
-      setIsLoad(true)
+      dispatch(setIsLoadTrue())
       setDisableSearchBtn(true)
     }
   }

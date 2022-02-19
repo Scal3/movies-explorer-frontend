@@ -9,7 +9,9 @@ import {
     SET_IS_SUBMIT_TRUE, 
     SET_LOGGED_IN, 
     SET_LOGGOUT, 
-    SET_SAVED_MOVIE 
+    SET_SAVED_MOVIE, 
+    SET_IS_LOAD_TRUE,
+    SET_IS_LOAD_FALSE
 } from './types'
 
 
@@ -100,11 +102,11 @@ export const checkValidToken = (historyHookPush, location) => (dispatch) => {
 
 export const setChangeUserData = (name, email) => ({ type: CHANGE_USER_DATA, payload: { name, email } })
 
-export const changeUserData = (name, email, { setIsLoad, setFormValid, setSuccess, setFail }) => (dispatch) => {
+export const changeUserData = (name, email, { setFormValid, setSuccess, setFail }) => (dispatch) => {
 
     mainApi.changeUserData(name, email)
       .then((res) => {
-        setIsLoad(false)
+        dispatch(setIsLoadFalse())
         setFormValid(false)
         setCurrentUser(res.data)
         dispatch(setChangeUserData(name, email))
@@ -112,7 +114,7 @@ export const changeUserData = (name, email, { setIsLoad, setFormValid, setSucces
     })
       .catch(err => {
         console.log(err)
-        setIsLoad(false)
+        dispatch(setIsLoadFalse())
         setFail(true)
     })
 }
@@ -123,3 +125,7 @@ export const setIsSubmitTrue = () => ({ type: SET_IS_SUBMIT_TRUE })
 export const setIsSubmitFalse = () => ({ type: SET_IS_SUBMIT_FALSE })
 
 export const toggleIsChecked = () => ({ type: TOGGLE_IS_CHECKED })
+
+export const setIsLoadTrue = () => ({ type: SET_IS_LOAD_TRUE })
+
+export const setIsLoadFalse = () => ({ type: SET_IS_LOAD_FALSE })
