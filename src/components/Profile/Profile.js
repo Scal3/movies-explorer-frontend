@@ -3,16 +3,18 @@ import './Profile.css';
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import Header from '../Header/Header';
 import Preloader from '../Preloader/Preloader'
 import { getCurrentUser } from '../../selectors/selectors';
 import { changeUserData } from '../../actions/actions'
+import { signOut } from '../../utils/routerFunctions';
 
 
-function Profile({ setIsLoad, isLoad, signOut }) {
+function Profile({ setIsLoad, isLoad }) {
 
-
+  const history = useHistory()
   const dispatch = useDispatch()
   const currentUser = useSelector(getCurrentUser)
 
@@ -136,7 +138,7 @@ function Profile({ setIsLoad, isLoad, signOut }) {
             {(success) && <p className="profile__req-success">Успешно обновлено =)</p>}
             {(fail) && <p className="profile__req-fail">Произошла ошибка =(</p>}
             <button className={(formValid ? "profile__button" : "profile__button profile__button_type_inactive")} type="submit">Редактировать</button>
-            <button className="profile__button profile__button_type_exit" onClick={signOut}>Выйти из аккаунта</button>
+            <button className="profile__button profile__button_type_exit" onClick={() => signOut(history.push, dispatch)}>Выйти из аккаунта</button>
           </div>
 
         </form>

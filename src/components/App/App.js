@@ -19,17 +19,14 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import { isSavedMovie } from '../../utils/constants'
-import { getUserData, setLoggedIn, setLoggout, checkValidToken } from '../../actions/actions';
+import { getUserData, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
 
 
-function App() {
+const App = () => {
 
   const dispatch = useDispatch()
   const isLoggedIn = useSelector(getLoggedIn) 
-
-
-
   const history = useHistory()
   const location = useLocation()
   const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
@@ -53,30 +50,6 @@ function App() {
   }, [isLoggedIn] )
 
 
-  //Переход основной сайт
-  function goMain(){
-    history.push('/movies')
-  }
-
-  //Переход на роут логина
-  function switchToLogin(){
-    history.push('/signin')
-  }
-
-  //Переход на роут регистрации
-  function switchToRegistration(){
-    history.push('/signup')
-  }
-
-  //Выход из системы
-  function signOut(){
-    localStorage.removeItem('token');
-    history.push('/');
-    dispatch(setLoggout())
-  }
-
-
-
   return (
     <div className="app">
       <Switch>
@@ -84,31 +57,18 @@ function App() {
         {/* Регистрация */}
         <Route path="/signup">
         {!isLoggedIn ? <Redirect to="/signup" /> : <Redirect to="/" />}
-          <Register
-            switchToLogin={switchToLogin}
-            goMain={goMain}
-          >
-          </Register>
+          <Register></Register>
         </Route>
 
         {/* Логин */}
         <Route path="/signin">
         {!isLoggedIn ? <Redirect to="/signin" /> : <Redirect to="/" />}
-          <Login 
-            switchToRegistration={switchToRegistration} 
-            goMain={goMain}
-          >
-           </Login>
+          <Login></Login>
         </Route>
 
         {/* Страница о проекте */}
         <Route path="/" exact>
-          <Promo
-            switchToRegistration={switchToRegistration} 
-            switchToLogin={switchToLogin}
-            goMain={goMain}
-          >
-          </Promo>
+          <Promo></Promo>
           <AboutProject></AboutProject>
           <Techs></Techs>
           <AboutMe></AboutMe>
@@ -160,7 +120,6 @@ function App() {
         <Route path="/profile">
           {isLoggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
           <Profile
-            signOut={signOut} 
             isLoad={isLoad} 
             setIsLoad={setIsLoad} 
           >
@@ -178,4 +137,3 @@ function App() {
 }
 
 export default App;
-

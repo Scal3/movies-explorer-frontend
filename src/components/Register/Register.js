@@ -1,16 +1,18 @@
 import './Register.css';
 
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 
 import logo from '../../image/registerLogo.svg'
 import * as MainApi from '../../APIs/mainApi';
 import { setLoggedIn } from '../../actions/actions';
+import { goMain, switchToLogin } from '../../utils/routerFunctions';
 
-const Register = ({ goMain, switchToLogin }) => {
+const Register = () => {
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('') // Стэйт для имени
@@ -99,7 +101,7 @@ const Register = ({ goMain, switchToLogin }) => {
           setPass('')
           setName('')
           dispatch(setLoggedIn())
-          goMain()
+          goMain(history.push)
         })
         .catch((err) => console.log(err))
 
@@ -149,7 +151,7 @@ const Register = ({ goMain, switchToLogin }) => {
 
           <div className="register__title-and-btn-container">
             <p className="register__title">Уже зарегистрированы?</p>
-            <button className="register__entr-btn" onClick={switchToLogin}>Войти</button>
+            <button className="register__entr-btn" onClick={() => switchToLogin(history.push)}>Войти</button>
           </div>
         </div>
 
