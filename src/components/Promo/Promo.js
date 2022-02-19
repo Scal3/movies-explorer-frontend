@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import logo from '../../image/registerLogo.svg'
 import webLogo from '../../image/webLogo.svg'
 import Header from '../Header/Header';
-import { loggedIn } from "../../selectors/selectors";
+import { getLoggedIn } from "../../selectors/selectors";
 
 function Promo({ switchToRegistration, switchToLogin, goMain}) {
 
-  const isLoggedIn = useSelector(loggedIn)  
+  const isLoggedIn = useSelector(getLoggedIn)  
 
   return (
     <div className="promo">

@@ -1,14 +1,21 @@
-import React from 'react';
-import { useState, useEffect, useContext } from 'react'
 import './Profile.css';
+
+import React from 'react';
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import Header from '../Header/Header';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import * as MainApi from '../../APIs/mainApi';
 import Preloader from '../Preloader/Preloader'
+import { getCurrentUser } from '../../selectors/selectors';
+import { changeUserData } from '../../actions/actions'
 
-function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
-  const currentUser = useContext(CurrentUserContext);  //Контекст с инфой пользователя
+function Profile({ setIsLoad, isLoad, signOut }) {
+
+
+  const dispatch = useDispatch()
+  const currentUser = useSelector(getCurrentUser)
+
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('')  // Стэйт для имени
@@ -82,18 +89,7 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
   const handleSubmit = e => {
     setIsLoad(true)
     e.preventDefault()
-    MainApi.changeUserData({name, email})
-      .then((res) => {
-        setIsLoad(false)
-        setFormValid(false)
-        setCurrentUser(res.data)
-        setSuccess(true)
-    })
-      .catch(err => {
-        console.log(err)
-        setIsLoad(false)
-        setFail(true)
-      })
+    dispatch(changeUserData(name, email, { setIsLoad, setFormValid, setSuccess, setFail }))
   }
 
 
@@ -110,12 +106,26 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
             <div className="profile__user-info-container">
               <div className="profile__info-container">
-                <p className="profile__info-title">Имя</p> <input name="name" value={name} onChange={handleName} onBlur={e => blurHandler(e)} className="profile__info-title"></input>
+                <p className="profile__info-title">Имя</p>
+                <input
+                 name="name" 
+                 value={name} 
+                 onChange={handleName} 
+                 onBlur={e => blurHandler(e)} 
+                 className="profile__info-title" 
+                />
                 {(nameDirty && nameError) && <div className="profile__input-error-top">{nameError}</div>}
               </div>
 
               <div className="profile__info-container">
-                <p className="profile__info-title">E-mail</p> <input name="email" value={email} onChange={handleEmail} onBlur={e => blurHandler(e)} className="profile__info-title"></input>
+                <p className="profile__info-title">E-mail</p> 
+                <input
+                 name="email"
+                 value={email}
+                 onChange={handleEmail} 
+                 onBlur={e => blurHandler(e)} 
+                 className="profile__info-title" 
+                />
                 {(emailDirty && emailError) && <div className="profile__input-error-bottom">{emailError}</div>}
               </div>
             </div>

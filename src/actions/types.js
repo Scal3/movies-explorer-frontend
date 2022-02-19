@@ -11,3 +11,5 @@ export const REMOVE_MOVIE = 'removeMovie'
 export const SET_LOGGED_IN = 'setLoggedIn'
 
 export const SET_LOGGOUT = 'setLoggout'
+
+export const CHANGE_USER_DATA = 'changeUserData'

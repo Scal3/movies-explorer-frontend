@@ -1,4 +1,5 @@
 import { 
+    CHANGE_USER_DATA,
     REMOVE_MOVIE, 
     SET_CURRENT_USER, 
     SET_CURRENT_USER_MOVIES, 
@@ -63,6 +64,16 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 loggedIn: false
+            }
+        }
+
+        case CHANGE_USER_DATA: {
+            const { name, email } = payload
+            const { id } = state.currentUser
+
+            return {
+                ...state,
+                currentUser: { email, name, id }
             }
         }
 

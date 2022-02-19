@@ -1,15 +1,21 @@
 import './SavedMovies.css'
+
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import MovieCard from '../MovieCard/MovieCard';
 import * as filteredFunctions from '../../utils/filteredFunctions'
-import { useContext, useEffect, useState } from 'react'
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { getCurrentUser } from '../../selectors/selectors';
 
 function SavedMovies({
   savedMovieCards, keyWord, checked, 
   isSavedMovie, handleSaveMovie, handleDeleteMovie, 
   isSubmit, setKeyWord}) {
 
-  const currentUser = useContext(CurrentUserContext);  // Контекст с инфой пользователя
+  // Контекст с инфой пользователя
+  const currentUser = useSelector(getCurrentUser)
+
+
   const [currentMovies, setCurrentMovies] = useState([]); // Стэйт сохранённых фильмов
   const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
 

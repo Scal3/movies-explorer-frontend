@@ -1,5 +1,5 @@
 import * as mainApi from '../APIs/mainApi'
-import { REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
+import { CHANGE_USER_DATA, REMOVE_MOVIE, SET_CURRENT_USER, SET_CURRENT_USER_MOVIES, SET_LOGGED_IN, SET_LOGGOUT, SET_SAVED_MOVIE } from './types'
 
 
 export const setCurrentUser = userData => ({ type: SET_CURRENT_USER, payload: { userData } })
@@ -84,4 +84,24 @@ export const checkValidToken = (historyHook, location) => (dispatch) => {
         }
         console.log(err)
       })
+}
+
+
+export const setChangeUserData = (name, email) => ({ type: CHANGE_USER_DATA, payload: { name, email } })
+
+export const changeUserData = (name, email, { setIsLoad, setFormValid, setSuccess, setFail }) => (dispatch) => {
+
+    mainApi.changeUserData(name, email)
+      .then((res) => {
+        setIsLoad(false)
+        setFormValid(false)
+        setCurrentUser(res.data)
+        dispatch(setChangeUserData(name, email))
+        setSuccess(true)
+    })
+      .catch(err => {
+        console.log(err)
+        setIsLoad(false)
+        setFail(true)
+    })
 }

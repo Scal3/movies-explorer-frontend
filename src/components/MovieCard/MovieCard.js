@@ -1,10 +1,10 @@
 import './MovieCard.css'
 
-import { useState, useContext, useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import { deleteMovie, saveMovie } from '../../actions/actions';
+import { getCurrentUser } from '../../selectors/selectors';
 
 function MovieCard({
   savedMovieCards, movie, isSavedMovie, 
@@ -13,12 +13,14 @@ function MovieCard({
 
   const dispatch = useDispatch()
 
+  // Контекст с инфой пользователя
+  const currentUser = useSelector(getCurrentUser)
+
+
 
   let buttonMobile // Кнопка лайка для мобильника
   let buttonDesctop // Кнопка лайка для десктопа
   const [isBtnActive, setIsBtnActive] = useState(false) // Стэйт для переключения класса кнопки лайка
-
-  const currentUser = useContext(CurrentUserContext);  // Контекст с инфой пользователя
 
   //  Массив сохранённых фильмов пользователя
   const currentUserMovieArray = savedMovieCards.filter(movie => {

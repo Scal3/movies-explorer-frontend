@@ -22,13 +22,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 import * as MainApi from '../../APIs/mainApi';
 import { isSavedMovie } from '../../utils/constants'
 import { getUserData, setLoggedIn, setLoggout, checkValidToken } from '../../actions/actions';
-import { loggedIn } from "../../selectors/selectors";
+import { getLoggedIn } from "../../selectors/selectors";
 
 
 function App() {
 
   const dispatch = useDispatch()
-  const isLoggedIn = useSelector(loggedIn) 
+  const isLoggedIn = useSelector(getLoggedIn) 
 
 
 
