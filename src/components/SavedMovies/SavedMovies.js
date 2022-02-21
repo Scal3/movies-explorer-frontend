@@ -4,20 +4,13 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
-import * as filteredFunctions from '../../utils/filteredFunctions'
-import { getCurrentUser, getCurrentUserMovies, getIsCheckedValue, getIsSubmitValue } from '../../selectors/selectors';
+import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunctions'
+import { getCurrentUserMovies, getIsCheckedValue } from '../../selectors/selectors';
 
-function SavedMovies({
-  keyWord, isSavedMovie, setKeyWord}) {
+const SavedMovies =({ keyWord, isSavedMovie, setKeyWord }) => {
 
-
-  const currentUser = useSelector(getCurrentUser)
   const currentUserMovies = useSelector(getCurrentUserMovies)
-  const isSubmit = useSelector(getIsSubmitValue)
   const isChecked = useSelector(getIsCheckedValue)
-
-  const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
-
 
   // Очищаем инпут формы поиска
   useEffect(() => {
@@ -25,10 +18,10 @@ function SavedMovies({
   }, [])
 
   // Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(currentUserMovies, submit)
+  const movies = filteredMovies(currentUserMovies, keyWord)
 
   // Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovies, submit)
+  const shortMovies = filteredShortfilms(currentUserMovies, keyWord)
 
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
   const result = isChecked ? shortMovies : movies
@@ -40,12 +33,11 @@ function SavedMovies({
       {currentUserMovies.length > 0 ? 
         (result.length > 0 ? (result.map((movie) => {
           return (
-            (movie.owner === currentUser.id ? 
-              <MovieCard
-                isSavedMovie={isSavedMovie} 
-                key={movie._id} 
-                movie={movie} 
-              /> : null)
+            <MovieCard
+              isSavedMovie={isSavedMovie} 
+              key={movie._id} 
+              movie={movie} 
+            /> 
             )
           }))
            : (<p className="movies-card-list__message">Ничего не найдено</p>)

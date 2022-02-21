@@ -19,7 +19,8 @@ const initialState = {
     loggedIn: false,
     isSubmit: false,
     isChecked: false,
-    isLoad: false
+    isLoad: false,
+    
 }
 
 const reducer = (state = initialState, {type, payload}) => {

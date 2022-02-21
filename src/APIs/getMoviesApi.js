@@ -2,7 +2,7 @@ export const BASE_URL = 'https://api.nomoreparties.co/beatfilm-movies'
 
 
 // Получаем все данные
-export function getMovies() {
+const getMovies = () => {
     return fetch(`${BASE_URL}/`)
     .then((res) => {
       if(res.ok) {
@@ -13,3 +13,5 @@ export function getMovies() {
       }
     })
 }
+
+export default getMovies

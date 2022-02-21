@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { entrBtn } from '../../utils/constants'
-import { setIsLoadTrue, setIsSubmitFalse, setIsSubmitTrue } from '../../actions/actions';
+import { setIsLoadTrue, setIsSubmitTrue, setIsSubmitFalse } from '../../actions/actions';
 
-const SearchForm = ({ keyWord, setKeyWord }) => {
+const SearchForm = ({ keyWord, setKeyWord, isSavedMovies }) => {
 
   const dispatch = useDispatch()
 
@@ -17,8 +17,8 @@ const SearchForm = ({ keyWord, setKeyWord }) => {
   //  Отменяем отображение фильмов, если нет ключевого слова
   useEffect(() => {
     if(keyWord.length < 1) {
-      dispatch(setIsSubmitFalse())
       setDisableSearchBtn(false)
+      dispatch(setIsSubmitFalse())
     }
   }, [keyWord] )
 
@@ -71,7 +71,11 @@ const SearchForm = ({ keyWord, setKeyWord }) => {
               <div className="search-form__middle">
               <div className="search-form__input-and-btn">
                 <input className="search-form__input" placeholder="&#128269; Фильм" required value={keyWord} onChange={handleInput}></input>
-                <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>
+                {
+                  isSavedMovies
+                   ? null 
+                   : <button className={(disableSearchBtn ? 'search-form__btn search-form__btn_disabled' : 'search-form__btn')} type="submit">Найти</button>
+                }
                 <span className="search-form__line"></span>
               </div>
               

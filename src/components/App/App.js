@@ -90,6 +90,7 @@ const App = () => {
           <SearchForm
             keyWord={keyWord}
             setKeyWord={setKeyWord}
+            isSavedMovies
           >
           </SearchForm>
           <SavedMovies

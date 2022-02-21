@@ -1,4 +1,5 @@
 import * as mainApi from '../APIs/mainApi'
+import getMoviesApi from '../APIs/getMoviesApi'
 import { 
     CHANGE_USER_DATA, 
     REMOVE_MOVIE, 
@@ -11,7 +12,8 @@ import {
     SET_LOGGOUT, 
     SET_SAVED_MOVIE, 
     SET_IS_LOAD_TRUE,
-    SET_IS_LOAD_FALSE
+    SET_IS_LOAD_FALSE,
+    SET_MOVIES_FROM_MAIN_SEARCH_BAR
 } from './types'
 
 
@@ -129,3 +131,21 @@ export const toggleIsChecked = () => ({ type: TOGGLE_IS_CHECKED })
 export const setIsLoadTrue = () => ({ type: SET_IS_LOAD_TRUE })
 
 export const setIsLoadFalse = () => ({ type: SET_IS_LOAD_FALSE })
+
+
+
+// export const getMoviesFromMainSearchBar = (setIsSuccess) => (dispatch) => {
+
+//     getMoviesApi()
+//       .then((movies) => {
+//         dispatch(setMoviesFromMainSearchBar(movies))
+//         dispatch(setIsSubmitFalse())
+//         dispatch(setIsLoadFalse())
+//       })
+//       .catch((err) => {
+//         console.log(err)
+//         setIsSuccess(false)
+//       })
+// }
+
+// export const setMoviesFromMainSearchBar = movies => ({ type: SET_MOVIES_FROM_MAIN_SEARCH_BAR, payload: { movies } })

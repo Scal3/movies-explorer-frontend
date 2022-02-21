@@ -23,3 +23,5 @@ export const TOGGLE_IS_CHECKED = 'toggleIsChecked'
 export const SET_IS_LOAD_TRUE = 'setIsLoadTrue'
 
 export const SET_IS_LOAD_FALSE = 'setIsLoadFalse'
+
+// export const SET_MOVIES_FROM_MAIN_SEARCH_BAR = 'setMoviesFromMainSearchBar'
