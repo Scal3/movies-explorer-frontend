@@ -7,14 +7,15 @@ import MovieCard from '../MovieCard/MovieCard'
 import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunctions'
 import getMoviesApi from '../../APIs/getMoviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
-import { getIsCheckedValue, getIsSubmitValue } from '../../selectors/selectors'
-import { setIsLoadFalse } from '../../actions/actions'
+import { getIsCheckedValue, getIsSubmitValue, getKeyWordValue } from '../../selectors/selectors'
+import { setIsLoadFalse, setKeyWord } from '../../actions/actions'
 
-const MoviesCardList = ({ keyWord, setKeyWord }) => {
+const MoviesCardList = () => {
 
   const dispatch = useDispatch()
   const isSubmit = useSelector(getIsSubmitValue)
   const isChecked = useSelector(getIsCheckedValue)
+  const keyWord = useSelector(getKeyWordValue)
 
   const [result, setResult] = useState([])
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек
@@ -42,11 +43,10 @@ const MoviesCardList = ({ keyWord, setKeyWord }) => {
       })
     }
   }, [isSubmit])
-  console.log(result)
 
   //  Очищаем инпут формы поиска
   useEffect(() => {
-    setKeyWord('')
+    dispatch(setKeyWord(''))
   }, [])
 
 

@@ -25,3 +25,5 @@ export const SET_IS_LOAD_TRUE = 'setIsLoadTrue'
 export const SET_IS_LOAD_FALSE = 'setIsLoadFalse'
 
 // export const SET_MOVIES_FROM_MAIN_SEARCH_BAR = 'setMoviesFromMainSearchBar'
+
+export const SET_KEY_WORD = 'setKeyWord'

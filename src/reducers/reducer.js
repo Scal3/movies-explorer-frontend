@@ -10,7 +10,8 @@ import {
     SET_LOGGOUT, 
     SET_SAVED_MOVIE, 
     SET_IS_LOAD_TRUE,
-    SET_IS_LOAD_FALSE
+    SET_IS_LOAD_FALSE,
+    SET_KEY_WORD
 } from "../actions/types"
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
     isSubmit: false,
     isChecked: false,
     isLoad: false,
-    
+    keyWord: '',
+
 }
 
 const reducer = (state = initialState, {type, payload}) => {
@@ -117,6 +119,15 @@ const reducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 isLoad: false
+            }
+        }
+
+        case SET_KEY_WORD: {
+            const { keyWord } = payload
+
+            return {
+                ...state,
+                keyWord: keyWord
             }
         }
 

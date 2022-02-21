@@ -6,26 +6,16 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 
-const Main = ({ keyWord, setKeyWord, movieCards }) => {
+const Main = () => {
     return (
       <main className="main">
-        <Preloader></Preloader>
-        <Header></Header>
-        <SearchForm
-          keyWord={keyWord}
-          setKeyWord={setKeyWord}
-        >
-        </SearchForm>
-        <MoviesCardList 
-          movieCards={movieCards} 
-          keyWord={keyWord} 
-          setKeyWord={setKeyWord}
-        >
-        </MoviesCardList>
-        <Footer></Footer>
+        <Preloader />
+        <Header />
+        <SearchForm />
+        <MoviesCardList />
+        <Footer />
       </main>
     );
   }
   
   export default Main;
-  

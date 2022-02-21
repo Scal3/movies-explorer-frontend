@@ -1,5 +1,5 @@
 import * as mainApi from '../APIs/mainApi'
-import getMoviesApi from '../APIs/getMoviesApi'
+// import getMoviesApi from '../APIs/getMoviesApi'
 import { 
     CHANGE_USER_DATA, 
     REMOVE_MOVIE, 
@@ -13,7 +13,9 @@ import {
     SET_SAVED_MOVIE, 
     SET_IS_LOAD_TRUE,
     SET_IS_LOAD_FALSE,
-    SET_MOVIES_FROM_MAIN_SEARCH_BAR
+    SET_KEY_WORD,
+    // SET_MOVIES_FROM_MAIN_SEARCH_BAR
+
 } from './types'
 
 
@@ -132,6 +134,7 @@ export const setIsLoadTrue = () => ({ type: SET_IS_LOAD_TRUE })
 
 export const setIsLoadFalse = () => ({ type: SET_IS_LOAD_FALSE })
 
+export const setKeyWord = keyWord => ({ type: SET_KEY_WORD, payload: { keyWord } })
 
 
 // export const getMoviesFromMainSearchBar = (setIsSuccess) => (dispatch) => {

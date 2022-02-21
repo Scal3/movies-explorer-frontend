@@ -1,20 +1,23 @@
 import './SavedMovies.css'
 
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MovieCard from '../MovieCard/MovieCard';
 import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunctions'
-import { getCurrentUserMovies, getIsCheckedValue } from '../../selectors/selectors';
+import { getCurrentUserMovies, getIsCheckedValue, getKeyWordValue } from '../../selectors/selectors';
+import { setKeyWord } from '../../actions/actions';
 
-const SavedMovies =({ keyWord, isSavedMovie, setKeyWord }) => {
+const SavedMovies =({ isSavedMovie }) => {
 
+  const dispatch = useDispatch()
   const currentUserMovies = useSelector(getCurrentUserMovies)
   const isChecked = useSelector(getIsCheckedValue)
+  const keyWord = useSelector(getKeyWordValue)
 
   // Очищаем инпут формы поиска
   useEffect(() => {
-    setKeyWord('')
+    dispatch(setKeyWord(''))
   }, [])
 
   // Фильтер всех фильмов

@@ -1,7 +1,7 @@
 import './App.css';
 
 import { Route, Switch, useHistory, Redirect, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Register from '../Register/Register';
@@ -26,10 +26,9 @@ import { getLoggedIn } from "../../selectors/selectors";
 const App = () => {
 
   const dispatch = useDispatch()
-  const isLoggedIn = useSelector(getLoggedIn) 
   const history = useHistory()
   const location = useLocation()
-  const [keyWord, setKeyWord] = useState('') // Стэйт для ключевого слова
+  const isLoggedIn = useSelector(getLoggedIn) 
 
   //Проверка токена
   useEffect(() => {
@@ -76,29 +75,15 @@ const App = () => {
         {/* Страница с фильмами */}
         <Route path="/movies">
           {isLoggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          <Main 
-            keyWord={keyWord} 
-            setKeyWord={setKeyWord}
-          >
-          </Main>
+          <Main></Main>
         </Route>
 
         {/* Страница с сохранёнными фильмами */}
         <Route path="/saved-movies">
           {isLoggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
           <Header></Header>
-          <SearchForm
-            keyWord={keyWord}
-            setKeyWord={setKeyWord}
-            isSavedMovies
-          >
-          </SearchForm>
-          <SavedMovies
-            keyWord={keyWord} 
-            isSavedMovie={isSavedMovie}
-            setKeyWord={setKeyWord}
-          >
-          </SavedMovies>
+          <SearchForm isSavedMovies></SearchForm>
+          <SavedMovies isSavedMovie={isSavedMovie}></SavedMovies>
           <Footer></Footer>
         </Route>
 
