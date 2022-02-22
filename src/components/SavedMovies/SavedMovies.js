@@ -8,7 +8,7 @@ import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunction
 import { getCurrentUserMovies, getIsCheckedValue, getKeyWordValue } from '../../selectors/selectors';
 import { setKeyWord } from '../../actions/actions';
 
-const SavedMovies =({ isSavedMovie }) => {
+const SavedMovies =() => {
 
   const dispatch = useDispatch()
   const currentUserMovies = useSelector(getCurrentUserMovies)
@@ -37,7 +37,7 @@ const SavedMovies =({ isSavedMovie }) => {
         (result.length > 0 ? (result.map((movie) => {
           return (
             <MovieCard
-              isSavedMovie={isSavedMovie} 
+              isSavedMovie
               key={movie._id} 
               movie={movie} 
             /> 

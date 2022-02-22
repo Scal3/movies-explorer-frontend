@@ -83,7 +83,7 @@ const App = () => {
           {isLoggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
           <Header></Header>
           <SearchForm isSavedMovies></SearchForm>
-          <SavedMovies isSavedMovie={isSavedMovie}></SavedMovies>
+          <SavedMovies></SavedMovies>
           <Footer></Footer>
         </Route>
 
