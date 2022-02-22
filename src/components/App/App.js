@@ -8,17 +8,12 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import AboutProject from '../AboutProject/AboutProject'
-import Promo from '../Promo/Promo'
-import Techs from '../Techs/Techs'
-import AboutMe from '../AboutMe/AboutMe'
-import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer'
 import Main from '../Main/Main';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import { isSavedMovie } from '../../utils/constants'
+import ProjectPage from '../ProjectPage/ProjectPage';
 import { getUserData, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
 
@@ -64,12 +59,7 @@ const App = () => {
 
         {/* Страница о проекте */}
         <Route path="/" exact>
-          <Promo></Promo>
-          <AboutProject></AboutProject>
-          <Techs></Techs>
-          <AboutMe></AboutMe>
-          <Portfolio></Portfolio>
-          <Footer></Footer>
+          <ProjectPage></ProjectPage>
         </Route>
 
         {/* Страница с фильмами */}
