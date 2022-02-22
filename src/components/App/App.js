@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Route, Switch, useHistory, Redirect, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,7 @@ import NotFound from '../NotFound/NotFound';
 import Main from '../Main/Main';
 import ProjectPage from '../ProjectPage/ProjectPage';
 import SavedMoviesPage from '../SavedMoviesPage/SavedMoviesPage'
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { getUserData, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
 
@@ -43,44 +44,52 @@ const App = () => {
       <Switch>
 
         {/* Регистрация */}
-        <Route path="/signup">
-        {!isLoggedIn ? <Redirect to="/signup" /> : <Redirect to="/" />}
-          <Register></Register>
-        </Route>
+        <ProtectedRoute
+          component={Register} 
+          isItAnAuthorizationComponent={true} 
+          path="/signup" 
+          redirectPath="/movies" 
+        />
 
         {/* Логин */}
-        <Route path="/signin">
-        {!isLoggedIn ? <Redirect to="/signin" /> : <Redirect to="/" />}
-          <Login></Login>
-        </Route>
+        <ProtectedRoute
+          component={Login}
+          isItAnAuthorizationComponent={true} 
+          path="/signin" 
+          redirectPath="/movies" 
+        />
 
         {/* Страница о проекте */}
         <Route path="/" exact>
-          <ProjectPage></ProjectPage>
+          <ProjectPage/>
         </Route>
 
         {/* Страница с фильмами */}
-        <Route path="/movies">
-          {isLoggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
-          <Main></Main>
-        </Route>
+        <ProtectedRoute 
+          component={Main} 
+          isItAnAuthorizationComponent={false} 
+          path="/movies" 
+          redirectPath="/" 
+        />
 
         {/* Страница с сохранёнными фильмами */}
-        <Route path="/saved-movies">
-          {isLoggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
-          <SavedMoviesPage></SavedMoviesPage>
-        </Route>
+        <ProtectedRoute 
+          component={SavedMoviesPage} 
+          isItAnAuthorizationComponent={false} 
+          path="/saved-movies" 
+          redirectPath="/" 
+        />
 
         {/* Профиль */}
-        <Route path="/profile">
-          {isLoggedIn ? <Redirect to="/profile" /> : <Redirect to="/" />}
-          <Profile></Profile>
-        </Route>
+        <ProtectedRoute 
+          component={Profile} 
+          isItAnAuthorizationComponent={false} 
+          path="/profile" 
+          redirectPath="/" 
+        />
 
         {/* Ошибка 404 */}
-        <Route path="*">
-          <NotFound></NotFound>
-        </Route>
+        <Route path="*"><NotFound/></Route>
 
       </Switch>
     </div>
