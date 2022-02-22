@@ -8,12 +8,9 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
-import Footer from '../Footer/Footer'
 import Main from '../Main/Main';
-import Header from '../Header/Header';
-import SearchForm from '../SearchForm/SearchForm';
-import SavedMovies from '../SavedMovies/SavedMovies';
 import ProjectPage from '../ProjectPage/ProjectPage';
+import SavedMoviesPage from '../savedMoviesPage/savedMoviesPage';
 import { getUserData, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
 
@@ -71,10 +68,7 @@ const App = () => {
         {/* Страница с сохранёнными фильмами */}
         <Route path="/saved-movies">
           {isLoggedIn ? <Redirect to="/saved-movies" /> : <Redirect to="/" />}
-          <Header></Header>
-          <SearchForm isSavedMovies></SearchForm>
-          <SavedMovies></SavedMovies>
-          <Footer></Footer>
+          <SavedMoviesPage></SavedMoviesPage>
         </Route>
 
         {/* Профиль */}
