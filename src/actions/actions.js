@@ -60,7 +60,6 @@ export  const saveMovie = (movie) => {
           )
           .then((res) => {
             dispatch(setSavedMovie(res.movie))
-            console.log(res.movie)
           })
           .catch(console.log)
     }

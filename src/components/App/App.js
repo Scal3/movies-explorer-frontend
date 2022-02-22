@@ -10,7 +10,7 @@ import Profile from '../Profile/Profile';
 import NotFound from '../NotFound/NotFound';
 import Main from '../Main/Main';
 import ProjectPage from '../ProjectPage/ProjectPage';
-import SavedMoviesPage from '../savedMoviesPage/savedMoviesPage';
+import SavedMoviesPage from '../SavedMoviesPage/SavedMoviesPage'
 import { getUserData, checkValidToken } from '../../actions/actions';
 import { getLoggedIn } from "../../selectors/selectors";
 
