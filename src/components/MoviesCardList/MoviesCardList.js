@@ -1,16 +1,23 @@
 import './MoviesCardList.css'
-import MovieCard from '../MovieCard/MovieCard'
-import * as filteredFunctions from '../../utils/filteredFunctions'
+
 import { useEffect, useState } from 'react'
-import * as MoviesApi from '../../utils/MoviesApi'
+import { useSelector, useDispatch } from 'react-redux'
+
+import MovieCard from '../MovieCard/MovieCard'
+import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunctions'
+import getMoviesApi from '../../APIs/getMoviesApi'
 import { numberOfCards, countAddCard } from '../../utils/constants'
+import { getIsCheckedValue, getIsSubmitValue, getKeyWordValue } from '../../selectors/selectors'
+import { setIsLoadFalse, setKeyWord } from '../../actions/actions'
 
-function MoviesCardList({
-  keyWord, checked, isSubmit, 
-  setIsLoad, setKeyWord, handleSaveMovie, 
-  handleDeleteMovie, savedMovieCards}) {
+const MoviesCardList = () => {
 
-  const [movieCards, setMovieCards] = useState([]) //Стэйт массива для карточек
+  const dispatch = useDispatch()
+  const isSubmit = useSelector(getIsSubmitValue)
+  const isChecked = useSelector(getIsCheckedValue)
+  const keyWord = useSelector(getKeyWordValue)
+
+  const [result, setResult] = useState([])
   const [cardsLimit, setCardsLimit] = useState(numberOfCards) //Стэйт лимита прогрузки карточек
   const [isSuccess, setIsSuccess] = useState(true) //Стэйт успешного получения данных
 
@@ -19,22 +26,16 @@ function MoviesCardList({
     setCardsLimit((i) => i + countAddCard);
   };
 
-  //  Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(movieCards, keyWord)
-
-  //  Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(movieCards, keyWord)
-
-  //  В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = checked ? shortMovies : movies
 
   // Обращаемся ко всем фильмам, если нажата кнопка поиска
   useEffect(() => {
     if(isSubmit) {
-      MoviesApi.getMovies()
+      getMoviesApi()
       .then((movies) =>{
-        setMovieCards(movies)
-        setIsLoad(false)
+        const longMovies = filteredMovies(movies, keyWord)
+        const shortMovies = filteredShortfilms(movies, keyWord)
+        setResult(isChecked ? shortMovies : longMovies)
+        dispatch(setIsLoadFalse())
       })
       .catch((err) => {
         console.log(err)
@@ -45,7 +46,7 @@ function MoviesCardList({
 
   //  Очищаем инпут формы поиска
   useEffect(() => {
-    setKeyWord('')
+    dispatch(setKeyWord(''))
   }, [])
 
 
@@ -63,9 +64,6 @@ function MoviesCardList({
                       <MovieCard
                         key={movie.id} 
                         movie={movie} 
-                        handleSaveMovie={handleSaveMovie} 
-                        handleDeleteMovie={handleDeleteMovie}
-                        savedMovieCards={savedMovieCards}
                       />
                     )).slice(0, cardsLimit)}
                 </div>

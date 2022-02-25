@@ -1,7 +1,13 @@
-import React from 'react'
 import './Preloader.css'
 
-const Preloader = ({isLoad}) => {
+import React from 'react'
+import { useSelector } from 'react-redux';
+
+import { getIsLoadValue } from '../../selectors/selectors';
+
+const Preloader = () => {
+
+    const isLoad = useSelector(getIsLoadValue)
 
     const isLoading = isLoad ? 'preloader' : 'preloader_inactive'
 

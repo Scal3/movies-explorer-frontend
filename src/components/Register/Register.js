@@ -1,10 +1,18 @@
-import { useState, useEffect } from 'react'
-import logo from '../../image/registerLogo.svg'
 import './Register.css';
-import * as MainApi from '../../utils/MainApi';
-import { Link } from 'react-router-dom'
 
-function Register({setLoggedIn, goMain, switchToLogin}) {
+import { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+
+import logo from '../../image/registerLogo.svg'
+import * as MainApi from '../../APIs/mainApi';
+import { setLoggedIn } from '../../actions/actions';
+import { goMain, switchToLogin } from '../../utils/routerFunctions';
+
+const Register = () => {
+
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('') // Стэйт для имени
@@ -92,8 +100,8 @@ function Register({setLoggedIn, goMain, switchToLogin}) {
           setEmail('')
           setPass('')
           setName('')
-          setLoggedIn(true)
-          goMain()
+          dispatch(setLoggedIn())
+          goMain(history.push)
         })
         .catch((err) => console.log(err))
 
@@ -143,7 +151,7 @@ function Register({setLoggedIn, goMain, switchToLogin}) {
 
           <div className="register__title-and-btn-container">
             <p className="register__title">Уже зарегистрированы?</p>
-            <button className="register__entr-btn" onClick={switchToLogin}>Войти</button>
+            <button className="register__entr-btn" onClick={() => switchToLogin(history.push)}>Войти</button>
           </div>
         </div>
 

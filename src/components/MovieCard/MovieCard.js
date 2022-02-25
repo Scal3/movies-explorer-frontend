@@ -1,24 +1,24 @@
 import './MovieCard.css'
-import { useState, useContext, useEffect } from 'react'
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
 
-function MovieCard({
-  savedMovieCards, movie, isSavedMovie, 
-  handleDeleteMovie, handleSaveMovie}) {
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
+import { deleteMovie, saveMovie } from '../../actions/actions';
+import { getCurrentUserMovies } from '../../selectors/selectors';
+
+function MovieCard({ movie, isSavedMovie }) {
+
+  const dispatch = useDispatch()
+  const currentUserMovies = useSelector(getCurrentUserMovies)
+
 
   let buttonMobile // Кнопка лайка для мобильника
   let buttonDesctop // Кнопка лайка для десктопа
   const [isBtnActive, setIsBtnActive] = useState(false) // Стэйт для переключения класса кнопки лайка
 
-  const currentUser = useContext(CurrentUserContext);  // Контекст с инфой пользователя
-
-  //  Массив сохранённых фильмов пользователя
-  const currentUserMovieArray = savedMovieCards.filter(movie => {
-    return movie.owner === currentUser.id
-  })
 
   //  Поиск совпадения по nameRU между поисковым запросом и массивом сохранённых фильмов
-  const findMovie = currentUserMovieArray.find(el => el.nameRU === movie.nameRU)
+  const findMovie = currentUserMovies.find(el => el.nameRU === movie.nameRU)
 
   //  Проверка на совпадение
   const chekLike = findMovie ? true : false
@@ -28,13 +28,13 @@ function MovieCard({
     setIsBtnActive(!isBtnActive)
 
     if (isSavedMovie === true) {
-      handleDeleteMovie(movie._id)
+      dispatch(deleteMovie(movie._id))
     } else if (isSavedMovie === false) {
-      handleSaveMovie(movie)
+      dispatch(saveMovie(movie))
     } else if (isBtnActive === false){
-      handleSaveMovie(movie)
+      dispatch(saveMovie(movie))
     } else if (isBtnActive === true){
-      handleDeleteMovie(findMovie._id)
+      dispatch(deleteMovie(findMovie._id))
     }
   }
 

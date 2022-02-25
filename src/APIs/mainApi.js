@@ -95,7 +95,7 @@ export function registration (password, email, name) {
 
 
   //  Изменяем данные пользователя
-  export function changeUserData ({name, email}) {
+  export function changeUserData (name, email) {
     return fetch(`${BASE_URL}/users/me`, {
       method: "PATCH",
       headers: {

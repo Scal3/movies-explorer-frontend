@@ -1,57 +1,46 @@
 import './SavedMovies.css'
+
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
 import MovieCard from '../MovieCard/MovieCard';
-import * as filteredFunctions from '../../utils/filteredFunctions'
-import { useContext, useEffect, useState } from 'react'
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
+import { filteredMovies, filteredShortfilms } from '../../utils/filteredFunctions'
+import { getCurrentUserMovies, getIsCheckedValue, getKeyWordValue } from '../../selectors/selectors';
+import { setKeyWord } from '../../actions/actions';
 
-function SavedMovies({
-  savedMovieCards, keyWord, checked, 
-  isSavedMovie, handleSaveMovie, handleDeleteMovie, 
-  isSubmit, setKeyWord}) {
+const SavedMovies =() => {
 
-  const currentUser = useContext(CurrentUserContext);  // Контекст с инфой пользователя
-  const [currentMovies, setCurrentMovies] = useState([]); // Стэйт сохранённых фильмов
-  const submit = isSubmit ? keyWord : '' // Если нажата кнопка поиска, тогда передаём ключевое слово
-
-  // При изменении массива сохранённых фильмов переопределяем состояние
-  useEffect(() => {
-    setCurrentMovies(savedMovieCards)
-  }, [savedMovieCards])
+  const dispatch = useDispatch()
+  const currentUserMovies = useSelector(getCurrentUserMovies)
+  const isChecked = useSelector(getIsCheckedValue)
+  const keyWord = useSelector(getKeyWordValue)
 
   // Очищаем инпут формы поиска
   useEffect(() => {
-    setKeyWord('')
+    dispatch(setKeyWord(''))
   }, [])
 
-  // Массив фильмов сохранённых текущим пользователем
-  const currentUserMovieArray = currentMovies.filter(movie => {
-    return movie.owner === currentUser.id
-  })
-
   // Фильтер всех фильмов
-  const movies = filteredFunctions.filteredMovies(currentUserMovieArray, submit)
+  const movies = filteredMovies(currentUserMovies, keyWord)
 
   // Фильтер короткометражек
-  const shortMovies = filteredFunctions.filteredShortfilms(currentUserMovieArray, submit)
+  const shortMovies = filteredShortfilms(currentUserMovies, keyWord)
 
   // В зависимости от состояния чекбокса, выбираем какой фильтр использовать
-  const result = checked ? shortMovies : movies
+  const result = isChecked ? shortMovies : movies
 
 
 
   return (
     <div className="saved-movies">
-      {currentUserMovieArray.length > 0 ? 
+      {currentUserMovies.length > 0 ? 
         (result.length > 0 ? (result.map((movie) => {
           return (
-            (movie.owner === currentUser.id ? 
-              <MovieCard
-                isSavedMovie={isSavedMovie} 
-                key={movie._id} movie={movie} 
-                handleSaveMovie={handleSaveMovie} 
-                handleDeleteMovie={handleDeleteMovie}
-                savedMovieCards={savedMovieCards}
-              /> : null)
+            <MovieCard
+              isSavedMovie
+              key={movie._id} 
+              movie={movie} 
+            /> 
             )
           }))
            : (<p className="movies-card-list__message">Ничего не найдено</p>)

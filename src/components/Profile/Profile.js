@@ -1,14 +1,24 @@
-import React from 'react';
-import { useState, useEffect, useContext } from 'react'
 import './Profile.css';
+
+import React from 'react';
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+
 import Header from '../Header/Header';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext'
-import * as MainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader'
+import { getCurrentUser } from '../../selectors/selectors';
+import { changeUserData, setIsLoadTrue } from '../../actions/actions'
+import { signOut } from '../../utils/routerFunctions';
 
-function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
-  const currentUser = useContext(CurrentUserContext);  //Контекст с инфой пользователя
+const Profile = () => {
+
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const currentUser = useSelector(getCurrentUser)
+  const userData = JSON.parse(localStorage.getItem('userData'))
+
 
   const [email, setEmail] = useState('') // Стэйт для мыла
   const [name, setName] = useState('')  // Стэйт для имени
@@ -24,22 +34,27 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
   const [success, setSuccess] = useState(false)
   const [fail, setFail] = useState(false)
 
+
+  //  Устанавливаем значения в инпуты
+  useEffect(() => {
+    if(localStorage.getItem('userData')) {
+      setEmail(userData.email)
+      setName(userData.name)
+    } else {
+      setEmail(currentUser.email)
+      setName(currentUser.name)
+    }
+  }, [currentUser, userData.email, userData.name])
+
   
   // Задаём состояние кнопки исходя из наличия ошибок валидации
   useEffect(() => {
-    if (emailError || nameError || (name === currentUser.name && email === currentUser.email)) {
+    if (emailError || nameError || (name === userData.name && email === userData.email)) {
       setFormValid(false)
     } else {
       setFormValid(true)
     }
-  }, [emailError, nameError, name, email, currentUser.name, currentUser.email])
-
-
-  //  Устанавливаем значения в инпуты
-  useEffect(() => {
-    setEmail(currentUser.email)
-    setName(currentUser.name)
-  }, [currentUser])
+  }, [emailError, nameError, name, email, userData.name, userData.email])
 
 
   // Устанавливаем значение в инпут и валидируем email по regex
@@ -79,27 +94,16 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
 
   //  Обработчик для сабмита формы
-  const handleSubmit = e => {
-    setIsLoad(true)
-    e.preventDefault()
-    MainApi.changeUserData({name, email})
-      .then((res) => {
-        setIsLoad(false)
-        setFormValid(false)
-        setCurrentUser(res.data)
-        setSuccess(true)
-    })
-      .catch(err => {
-        console.log(err)
-        setIsLoad(false)
-        setFail(true)
-      })
+  const handleSubmit = event => {
+    event.preventDefault()
+    dispatch(setIsLoadTrue())
+    dispatch(changeUserData(name, email, { setFormValid, setSuccess, setFail }))
   }
 
 
     return (
       <div className="profile">
-        <Preloader isLoad={isLoad}></Preloader>
+        <Preloader></Preloader>
 
         <Header></Header>
 
@@ -110,12 +114,26 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
 
             <div className="profile__user-info-container">
               <div className="profile__info-container">
-                <p className="profile__info-title">Имя</p> <input name="name" value={name} onChange={handleName} onBlur={e => blurHandler(e)} className="profile__info-title"></input>
+                <p className="profile__info-title">Имя</p>
+                <input
+                 name="name" 
+                 value={name} 
+                 onChange={handleName} 
+                 onBlur={e => blurHandler(e)} 
+                 className="profile__info-title" 
+                />
                 {(nameDirty && nameError) && <div className="profile__input-error-top">{nameError}</div>}
               </div>
 
               <div className="profile__info-container">
-                <p className="profile__info-title">E-mail</p> <input name="email" value={email} onChange={handleEmail} onBlur={e => blurHandler(e)} className="profile__info-title"></input>
+                <p className="profile__info-title">E-mail</p> 
+                <input
+                 name="email"
+                 value={email}
+                 onChange={handleEmail} 
+                 onBlur={e => blurHandler(e)} 
+                 className="profile__info-title" 
+                />
                 {(emailDirty && emailError) && <div className="profile__input-error-bottom">{emailError}</div>}
               </div>
             </div>
@@ -126,7 +144,7 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
             {(success) && <p className="profile__req-success">Успешно обновлено =)</p>}
             {(fail) && <p className="profile__req-fail">Произошла ошибка =(</p>}
             <button className={(formValid ? "profile__button" : "profile__button profile__button_type_inactive")} type="submit">Редактировать</button>
-            <button className="profile__button profile__button_type_exit" onClick={signOut}>Выйти из аккаунта</button>
+            <button className="profile__button profile__button_type_exit" onClick={() => signOut(history.push, dispatch)}>Выйти из аккаунта</button>
           </div>
 
         </form>
@@ -136,3 +154,5 @@ function Profile({setIsLoad, setCurrentUser, isLoad, signOut}) {
   
   export default Profile;
   
+
+

@@ -6,38 +6,16 @@ import Footer from '../Footer/Footer';
 import Preloader from '../Preloader/Preloader';
 
 
-function Main({
-  isLoad, keyWord, setKeyWord, 
-  setIsSubmit, checked, setChecked, 
-  setIsLoad, movieCards, isSubmit, 
-  handleSaveMovie, handleDeleteMovie, savedMovieCards}) {
+const Main = () => {
     return (
       <main className="main">
-        <Preloader isLoad={isLoad}></Preloader>
-        <Header></Header>
-        <SearchForm
-          keyWord={keyWord}
-          setKeyWord={setKeyWord}
-          setIsSubmit={setIsSubmit}
-          checked={checked}
-          setChecked={setChecked}
-          setIsLoad={setIsLoad}>
-        </SearchForm>
-        <MoviesCardList 
-          movieCards={movieCards} 
-          keyWord={keyWord} 
-          setKeyWord={setKeyWord}
-          isSubmit={isSubmit} 
-          checked={checked}
-          setIsLoad={setIsLoad}
-          handleSaveMovie={handleSaveMovie}
-          handleDeleteMovie={handleDeleteMovie}
-          savedMovieCards={savedMovieCards}>
-        </MoviesCardList>
-        <Footer></Footer>
+        <Preloader />
+        <Header />
+        <SearchForm />
+        <MoviesCardList />
+        <Footer />
       </main>
     );
   }
   
   export default Main;
-  

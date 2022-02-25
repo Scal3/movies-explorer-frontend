@@ -1,20 +1,30 @@
 import './Promo.css'
+
+import { useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
+
 import logo from '../../image/registerLogo.svg'
 import webLogo from '../../image/webLogo.svg'
 import Header from '../Header/Header';
+import { getLoggedIn } from "../../selectors/selectors";
+import { goMain, switchToRegistration, switchToLogin } from '../../utils/routerFunctions';
 
-function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
+function Promo() {
+
+  const isLoggedIn = useSelector(getLoggedIn)  
+  const history = useHistory()
+
   return (
     <div className="promo">
       <div className="promo__ears">
-      {loggedIn ? <Header promoHeaderPadding={true}></Header> : 
+      {isLoggedIn ? <Header promoHeaderPadding={true}></Header> : 
         <div className="promo__top">
           <img className="promo__logo" src={logo} alt="logo"></img>
 
           <div className="promo__btns-container">
-            <button className="promo__btn" onClick={switchToRegistration}>Регистрация</button>
+            <button className="promo__btn" onClick={() => switchToRegistration(history.push)}>Регистрация</button>
 
-            <button className="promo__btn promo__btn_type_enter" onClick={switchToLogin}>Войти</button>
+            <button className="promo__btn promo__btn_type_enter" onClick={() => switchToLogin(history.push)}>Войти</button>
           </div>
         </div>}
 
@@ -30,8 +40,8 @@ function Promo({loggedIn, switchToRegistration, switchToLogin, goMain}) {
         </div>
 
         <div className="promo__bottom">
-          {loggedIn ? <button className="promo__more-btn" onClick={goMain}>Узнать больше</button> :
-            <button className="promo__more-btn" onClick={switchToLogin}>Узнать больше</button>}
+          {isLoggedIn ? <button className="promo__more-btn" onClick={() => goMain(history.push)}>Узнать больше</button> :
+            <button className="promo__more-btn" onClick={() => switchToLogin(history.push)}>Узнать больше</button>}
         </div>
       </div>
     </div>
