@@ -17,6 +17,7 @@ const Profile = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const currentUser = useSelector(getCurrentUser)
+  const userData = JSON.parse(localStorage.getItem('userData'))
 
 
   const [email, setEmail] = useState('') // Стэйт для мыла
@@ -33,22 +34,27 @@ const Profile = () => {
   const [success, setSuccess] = useState(false)
   const [fail, setFail] = useState(false)
 
+
+  //  Устанавливаем значения в инпуты
+  useEffect(() => {
+    if(localStorage.getItem('userData')) {
+      setEmail(userData.email)
+      setName(userData.name)
+    } else {
+      setEmail(currentUser.email)
+      setName(currentUser.name)
+    }
+  }, [currentUser, userData.email, userData.name])
+
   
   // Задаём состояние кнопки исходя из наличия ошибок валидации
   useEffect(() => {
-    if (emailError || nameError || (name === currentUser.name && email === currentUser.email)) {
+    if (emailError || nameError || (name === userData.name && email === userData.email)) {
       setFormValid(false)
     } else {
       setFormValid(true)
     }
-  }, [emailError, nameError, name, email, currentUser.name, currentUser.email])
-
-
-  //  Устанавливаем значения в инпуты
-  useEffect(() => {
-    setEmail(currentUser.email)
-    setName(currentUser.name)
-  }, [currentUser])
+  }, [emailError, nameError, name, email, userData.name, userData.email])
 
 
   // Устанавливаем значение в инпут и валидируем email по regex
@@ -148,3 +154,5 @@ const Profile = () => {
   
   export default Profile;
   
+
+

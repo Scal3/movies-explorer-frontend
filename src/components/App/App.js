@@ -22,13 +22,14 @@ const App = () => {
   const history = useHistory()
   const location = useLocation()
   const isLoggedIn = useSelector(getLoggedIn) 
+  console.log(history.location.pathname)
 
   //Проверка токена
   useEffect(() => {
     if (localStorage.getItem('token')){
       dispatch(checkValidToken(history.push, location))
-    }
-  }, [dispatch, history.push] )
+    } 
+  }, [dispatch] )
 
 
   // Если с токеном всё ок, грузим данные пользователя
@@ -89,7 +90,9 @@ const App = () => {
         />
 
         {/* Ошибка 404 */}
-        <Route path="*"><NotFound/></Route>
+        <Route path="*">
+          <NotFound/>
+        </Route>
 
       </Switch>
     </div>
@@ -97,3 +100,4 @@ const App = () => {
 }
 
 export default App;
+

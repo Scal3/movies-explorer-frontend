@@ -30,11 +30,10 @@ export const getUserData = () => (dispatch, getState) => {
         return savedMoviesData.movies
       })
       .then(savedMoviesData => {
-        const { id }  = getState().currentUser
-        const currentUserMovies = savedMoviesData.filter(movie => {
-          return movie.owner === id
-        })
+        const userData = getState().currentUser
+        const currentUserMovies = savedMoviesData.filter(movie => movie.owner === userData.id)
         dispatch(setCurrentUserMovies(currentUserMovies))
+        localStorage.setItem('userData', JSON.stringify(userData))
       })
       .catch(console.log)
 }
@@ -111,8 +110,8 @@ export const changeUserData = (name, email, { setFormValid, setSuccess, setFail 
       .then((res) => {
         dispatch(setIsLoadFalse())
         setFormValid(false)
-        setCurrentUser(res.data)
         dispatch(setChangeUserData(name, email))
+        localStorage.setItem('userData', JSON.stringify({ name, email }))
         setSuccess(true)
     })
       .catch(err => {
